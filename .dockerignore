@@ -1,0 +1,11 @@
+.git
+.gitignore
+.env
+firebase-credentials.json
+*.sql
+*.sql.gz
+venv/
+node_modules/
+data/cache/*
+data/logs/*
+README.md
