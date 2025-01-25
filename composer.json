@@ -1,0 +1,25 @@
+{
+    "name": "decorezrenovez/website",
+    "description": "Site de mise en relation entre particuliers et artisans",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "zendframework/zendframework1": "^1.12",
+        "kreait/firebase-php": "^7.0",
+        "google/cloud-firestore": "^1.0",
+        "vlucas/phpdotenv": "^5.3"
+    },
+    "autoload": {
+        "psr-0": {
+            "Application_": "application/",
+            "My_": "library/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "mkdir -p data/cache",
+            "mkdir -p data/logs",
+            "chmod -R 777 data"
+        ]
+    }
+}
