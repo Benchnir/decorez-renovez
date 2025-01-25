@@ -1,0 +1,15 @@
+<?php if (isset($this->comments) && count($this->comments) > 0): ?>
+    <?php foreach ($this->comments as $comment): ?>
+        <?php
+        if ($this->user != null)
+            $isOwner = ($comment->getMember()->getId() == $this->user->getId()) ? true : false;
+        else
+            $isOwner = false;
+
+        echo $this->partial('_partials/comment.phtml', array('comment' => $comment, 'isDetail' => false
+            , 'isOwner' => $isOwner));
+        ?>
+    <?php endforeach; ?>	
+
+    <?php echo $this->paginationControl($this->comments, 'Elastic', '_partials/pagination.phtml'); ?>
+<?php endif; ?>

@@ -1,0 +1,14 @@
+<div id="dialog-form-report-service" title="Signaler un abus">
+    <form id="reportform-form">
+        <input type="hidden" name="author" value="<?php echo $this->author; ?>"/>
+        <input type="hidden" name="service" value="<?php echo $this->service; ?>"/>
+        <label for="reportform-reason">Raison</label>
+        <input type="text" name="reason" class="text ui-widget-content ui-corner-all" />
+        <label for="reportform-message">Complément</label>
+        <input type="text" name="complement" class="text ui-widget-content ui-corner-all" />
+    </form>
+</div>
+
+<div id='dialog-form-report-service-ok'>
+    Votre signalement a bien été prix en compte et nos modérateurs vont l'examiner.
+</div>

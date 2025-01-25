@@ -1,0 +1,104 @@
+<?php $this->headScript()->appendFile('js/serviceModification.js', 'text/javascript'); ?>
+<?php
+if (is_array($this->formMessages) && !empty($this->formMessages)) {
+    echo $this->partial('_partials/messenger.phtml', array('data' => $this->formMessages));
+}
+?>
+<div class="inscription">	
+
+    <div class="leftColumn inner">
+        <div class="inner">
+            <p>Déposer votre profil sur <a href="page1.html">decorez-renovez.fr</a> est GRATUIT et très simple.
+                Votre annonce sera validée par notre équipe éditoriale avant d’être mise en ligne.<a href="page1.html">Voir les règles de diffusion.</a></p></br></br>
+        </div>
+        <div class="inner">
+            <img src="<?php echo $this->baseUrl('images/flecheexplication.png'); ?>" width="23" height="24" style="margin: 0 10px 10px;float:left;" alt="" />	
+
+            <h1>Remplissez bien votre profil ainsi donnez envie aux clients de vous appeler</h1>
+            <div class="info">info: 1 profil avec photo est 7 fois plus consulté qu’un profil sans photo</div>
+        </div>
+    </div>
+
+    <div class="content box inner">
+        <?php echo $this->formService; ?>
+    </div>
+
+    <?php if (isset($this->formServiceJob) && $this->formServiceJob != null): ?>
+        <div class="leftColumn inner">
+            <div class="inner">
+                <img src="<?php echo $this->baseUrl('images/flecheexplication.png'); ?>" width="23" height="24" style="margin: 0 10px 10px;float:left;" alt=""/>	
+
+                <h1>Remplissez vos autres domaines d’activités, vos prix indicatifs et donnez vous une note</h1>
+                <div class="info">info : mettez plus d’étoiles dans l’activité où vous voulez travailler d’avantage</div>
+            </div>
+        </div>
+
+        <div class="content box inner">
+            <div class="leftColumn inner">
+                <form name="addServiceJob" enctype="application/x-www-form-urlencoded" action="" method="post" class="service_form inner">
+                    <div class="metier_subtitle">
+                        Mes prix pour :
+                        <?php echo $this->formServiceJob->job; ?>
+                    </div>
+
+                    <p>Ma note</p>
+                    <?php echo $this->formServiceJob->evaluation; ?>
+
+                    <div class="calcul_prix">
+                        <div class="prix_2">
+                            <?php echo $this->formServiceJob->prix2; ?>
+
+                            <h2>de l'heure</h2>
+                            <h3>de 1 à 2 jours</h3>
+                            <h4>Soit pour </br><strong>2 </strong>jours <strong><span id="heure_txt_2">260</span> €</strong></h4>
+                        </div>
+
+                        <div class="prix_10">
+                            <?php echo $this->formServiceJob->prix10; ?>
+
+                            <h2>de l'heure</h2>
+                            <h3>de 2 à 10 jours</h3>
+
+                            <h4>Soit pour </br><strong>10 </strong>jours <strong><span id="heure_txt_10">800</span> €</strong></h4>
+                        </div>
+
+                        <div class="prix_30">
+                            <?php echo $this->formServiceJob->prix30; ?>
+                            <h2>de l'heure</h2>
+                            <h3>de 10 à 30 jours</h3>
+
+                            <h4>Soit pour </br><strong>30</strong> jours <strong><span id="heure_txt_30">1920</span> €</strong></h4>
+                        </div>
+                    </div>
+
+                    <?php echo $this->formServiceJob->submitServiceJob; ?>
+                </form>
+            </div>
+        </div>
+
+        <div class="content">
+            <p>Listes de vos m&eacute;tiers :</p>
+            <?php if (isset($this->serviceJobs) && count($this->serviceJobs) > 0): ?>
+                <?php foreach ($this->serviceJobs as $job): ?>
+                    <div class="content box inner">
+                        <?php echo $this->partial('_partials/service_job.phtml', array('job' => $job)); ?>
+                    </div>
+                <?php endforeach; ?>
+
+                <?php echo $this->paginationControl($this->serviceJobs, 'Elastic', '_partials/pagination.phtml'); ?>
+            <?php else: ?>
+                Vous n'avez pas encore ajout&eacute; de m&eacute;tier.
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+
+    <div class="content inner">
+        <p>Le site decorez-renovez.fr est un simple outils de mise en relation et ne sera en aucun cas impliqué
+            dans les litiges ou désaccords entre le professionnel et son client.</br>
+
+            En validant la diffusion de mon annonce, j’accepte les Règles de diffusion et d’utilisation du site 
+            decorez-renovez.fr et j’autorise decorez-renovez.fr à diffuser mon annonce.<p>
+    </div>
+</div>
+
+

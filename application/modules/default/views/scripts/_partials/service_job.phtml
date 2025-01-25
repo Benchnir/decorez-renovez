@@ -1,0 +1,26 @@
+<div class="leftColumn inner">
+    <h1>Mes prix :</h1>
+
+    <div class="calcul_prix">
+        <div class="prix_2">
+            <h1><?php echo $this->job->getPrice1(); ?> €</h1>
+            <h2>de l'heure</h2>
+            <h3>de 1 à 2 jours</h3>
+            <h4>Soit pour </br><strong>2 </strong>jours <strong><span id="heure_txt_2"><?php echo ($this->job->getPrice1() * 2 * 7); ?></span> €</strong></h4>
+        </div>
+
+        <div class="prix_10">
+            <h1><?php echo $this->job->getPrice2(); ?> €</h1>
+            <h2>de l'heure</h2>
+            <h3>de 2 à 10 jours</h3>
+            <h4>Soit pour </br><strong>10 </strong>jours <strong><span id="heure_txt_10"><?php echo ($this->job->getPrice2() * 10 * 7); ?></span> €</strong></h4>
+        </div>
+
+        <div class="prix_30">
+            <h1><?php echo $this->job->getPrice3(); ?> €</h1>
+            <h2>de l'heure</h2>
+            <h3>de 10 à 30 jours</h3>
+            <h4>Soit pour </br><strong>30</strong> jours <strong><span id="heure_txt_30"><?php echo ($this->job->getPrice3() * 30 * 7); ?></span> €</strong></h4>
+        </div>
+    </div>
+</div>

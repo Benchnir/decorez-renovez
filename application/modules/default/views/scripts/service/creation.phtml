@@ -1,0 +1,41 @@
+<?php
+if (is_array($this->formMessages) && !empty($this->formMessages)) {
+    echo $this->partial('_partials/messenger.phtml', array('data' => $this->formMessages));
+}
+?>
+<div class="inscription">	
+
+    <div class="leftColumn inner">
+        <div class="inner">
+            <p>Déposer votre profil sur <a href="page1.html">decorez-renovez.fr</a> est GRATUIT et très simple.
+                Votre annonce sera validée par notre équipe éditoriale avant d’être mise en ligne.<a href="page1.html">Voir les règles de diffusion.</a></p></br></br>
+        </div>
+        <div class="inner">
+            <img src="<?php echo $this->baseUrl('images/flecheexplication.png'); ?>" width="23" height="24" style="margin: 0 10px 10px;float:left;"alt="" />	
+
+            <h1>Remplissez bien votre profil ainsi donnez envie aux clients de vous appeler</h1>
+            <div class="info">info: 1 profil avec photo est 7 fois plus consulté qu’un profil sans photo</div>
+        </div>
+    </div>
+
+    <div class="content box inner">
+        <?php echo $this->form; ?>
+    </div>
+
+    <div class="leftColumn inner">
+        <div class="inner">
+            <img src="<?php echo $this->baseUrl('images/flecheexplication.png'); ?>" width="23" height="24" style="margin: 0 10px 10px;float:left;" alt=""/>	
+
+            <h1>Remplissez vos autres domaines d’activités, vos prix indicatifs et donnez vous une note</h1>
+            <div class="info">info : mettez plus d’étoiles dans l’activité où vous voulez travailler d’avantage</div>
+        </div>
+    </div>
+
+    <div class="content inner">
+        <p>Le site decorez-renovez.fr est un simple outils de mise en relation et ne sera en aucun cas impliqué
+            dans les litiges ou désaccords entre le professionnel et son client.</br>
+
+            En validant la diffusion de mon annonce, j’accepte les Règles de diffusion et d’utilisation du site 
+            decorez-renovez.fr et j’autorise decorez-renovez.fr à diffuser mon annonce.<p>
+    </div>
+</div>

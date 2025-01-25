@@ -1,0 +1,108 @@
+<?php $this->headLink()->prependStylesheet($this->baseUrl('css/formInline.css')); ?>
+
+
+<div class="pictinfo-whithouttext">
+    <img src="<?php echo $this->baseUrl('images/flecheexplication.png'); ?>" width="23" height="24" />	
+    <h1>Créer mon Compte !</h1>
+</div>
+
+<?php
+if (is_array($this->formMessages) && !empty($this->formMessages)) {
+    echo $this->partial('_partials/messenger.phtml', array('data' => $this->formMessages));
+}
+?>
+
+<div class="box">
+    <?php if (isset($this->form) && $this->form != null): ?>
+        <form method="POST" action="<?php echo $this->url(array('controller' => 'membre', 'action' => 'inscription')); ?>">
+            <table>
+                <tr>
+                    <td class="label"><?php echo $this->form->lastname->renderLabel(); ?></td>
+                    <td><?php echo $this->form->lastname->renderViewHelper(); ?></td>
+                </tr>
+                <tr>
+                    <td class="label"><?php echo $this->form->firstname->renderLabel(); ?></td>
+                    <td><?php echo $this->form->firstname->renderViewHelper(); ?></td>
+                </tr>
+                <tr>
+                    <td class="label"><?php echo $this->form->email->renderLabel(); ?></td>
+                    <td><?php echo $this->form->email->renderViewHelper(); ?></td>
+                </tr>
+                
+                <tr>
+                    <td class="label"><?php echo $this->form->password->renderLabel(); ?></td>
+                    <td><?php echo $this->form->password->renderViewHelper(); ?></td>
+                </tr>
+                <tr>
+                    <td class="label"><?php echo $this->form->password2->renderLabel(); ?></td>
+                    <td><?php echo $this->form->password2->renderViewHelper(); ?></td>
+                </tr>
+                
+                <tr>
+                    <td class="label" style="width: 300px;"><?php echo $this->form->isProfessionnal->renderLabel(); ?></td>
+                    <td><?php echo $this->form->isProfessionnal->renderViewHelper(); ?></td>
+                </tr>
+            </table>
+            
+            <div id="optionnalProFields">
+                <table>
+                    <tr>
+                        <td class="label" style="width: 300px;"><?php echo $this->form->phone->renderLabel(); ?></td>
+                        <td><?php echo $this->form->phone->renderViewHelper(); ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label"><?php echo $this->form->fax->renderLabel(); ?></td>
+                        <td><?php echo $this->form->fax->renderViewHelper(); ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label"><?php echo $this->form->siret->renderLabel(); ?></td>
+                        <td><?php echo $this->form->siret->renderViewHelper(); ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label"><?php echo $this->form->department->renderLabel(); ?></td>
+                        <td><?php echo $this->form->department->renderViewHelper(); ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label"><?php echo $this->form->company_name->renderLabel(); ?></td>
+                        <td><?php echo $this->form->company_name->renderViewHelper(); ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label"><?php echo $this->form->sponsor->renderLabel(); ?></td>
+                        <td><?php echo $this->form->sponsor->renderViewHelper(); ?></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <table>
+                <tr>
+                    <td class="label" style="width: 300px;"><?php echo $this->form->cgv->renderLabel(); ?></td>
+                    <td><?php echo $this->form->cgv->renderViewHelper(); ?><?php echo $this->form->cgv->renderErrors(); ?></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><?php echo $this->form->captcha; ?></td>
+                </tr>
+            </table>
+            
+            <?php echo $this->form->submit; ?>
+        </form>
+    <?php else: ?>
+    Une fois votre compte actif, vous pourrez vous connecter.
+    <?php endif; ?>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        toogleProFields();
+        $('#isProfessionnal').click(function(){
+            toogleProFields();
+        });
+    });
+    function toogleProFields()
+    {
+        if($('#isProfessionnal').is(':checked')){
+            $('#optionnalProFields').show();
+        } else {
+            $('#optionnalProFields').hide();
+        }
+    }
+</script>

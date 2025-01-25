@@ -1,0 +1,86 @@
+
+<div id="searchdiv">
+    <form method="post">
+        <input type="hidden" name="region" value="<?php echo $this->region; ?>" />        
+        <div class="column">
+            <?php echo $this->form->getElement('job'); ?>
+            <?php echo $this->form->getElement('name'); ?>
+        </div>
+        <div class="column">
+            <?php echo $this->form->getElement('budget'); ?>
+            <?php echo $this->form->getElement('region'); ?>
+        </div>
+        <input class="submitbutton" type="submit" name="submit" id="submitbutton" value="Rechercher">
+    </form>
+
+    <div id="pub">
+        <div style="margin-right: 5px;text-align: right; color: #f2bb33;">publicité <img src="<?php echo $this->baseUrl('images/carre.gif'); ?>" width="6" height="7" style="position: relative;top: -3px;" alt="publicité partenaires travaux"/></div>
+        <?php echo $this->partial('_partials/pubs/728x90_1.phtml'); ?>
+    </div>
+    
+    <div class="pancarte">
+        <a href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'creation')); ?>"><img src="<?php echo $this->baseUrl('images/deposer_mon_annonce.png'); ?>" alt="deposer annonce chantier travaux"></a>
+    </div>
+    
+    <img id="search-topleft" src="<?php echo $this->baseUrl('images/rond2.png'); ?>" width="6" height="7">
+    <img id="search-topright" src="<?php echo $this->baseUrl('images/rond2.png'); ?>" width="6" height="7">					
+    <img id="search-botleft" src="<?php echo $this->baseUrl('images/rond2.png'); ?>" width="6" height="7">
+    <img id="search-botright" src="<?php echo $this->baseUrl('images/rond2.png'); ?>" width="6" height="7">
+</div>
+<div style="border-bottom: 2px solid #05a8fb;text-align: right;margin: 10px;margin-bottom: 20px;">
+    <h1 style="position: relative; top: 7px;font-size: 18px;background: #f1f3ea; color: #05a8fb; padding-left: 20px; float: right">Remonte les prestataires ayant les meilleurs retours clients et le plus de projets réussis</h1>
+    <div style="clear: right"></div>
+</div>
+
+<?php if (isset($this->toplistservices) && count($this->toplistservices) > 0): ?>
+    <?php foreach ($this->toplistservices as $service): ?>
+        <?php
+        if ($this->user != null)
+            $isOwner = ($service->getMember()->getId() == $this->user->getId()) ? true : false;
+        else
+            $isOwner = false;
+
+        $avatars = $service->getMember()->getAvatars();
+        if(count($avatars) > 0){
+            $avatar = $avatars->get(0);
+        } else {
+            $avatar = null;
+        }
+        echo $this->partial('_partials/service.phtml', array(
+            'service' => $service, 
+            'avatar' => $avatar,
+            'commentsInfo' => $this->commentsInfos[$service->getId()], 
+            'askedJob'=> isset($this->askedJob)? $this->askedJob:null, 
+            'isDetail' => false,
+            'isOwner' => $isOwner));
+        ?>
+    <?php endforeach; ?>	
+<?php endif; ?>
+
+<?php if (isset($this->services) && count($this->services) > 0): ?>
+    <?php foreach ($this->services as $service): ?>
+        <?php
+        if ($this->user != null)
+            $isOwner = ($service->getMember()->getId() == $this->user->getId()) ? true : false;
+        else
+            $isOwner = false;
+
+        $avatars = $service->getMember()->getAvatars();
+        if(count($avatars) > 0){
+            $avatar = $avatars->get(0);
+        } else {
+            $avatar = null;
+        }
+        echo $this->partial('_partials/service.phtml', array(
+            'service' => $service, 
+            'avatar' => $avatar, 
+            'commentsInfo' => $this->commentsInfos[$service->getId()], 
+            'askedJob'=> isset($this->askedJob)? $this->askedJob:null, 
+            'askedBudget'=> isset($this->askedBudget)? $this->askedBudget:null, 
+            'isDetail' => false,
+            'isOwner' => $isOwner));
+        ?>
+    <?php endforeach; ?>	
+
+    <?php echo $this->paginationControl($this->services, 'Elastic', '_partials/pagination.phtml'); ?>
+<?php endif; ?>

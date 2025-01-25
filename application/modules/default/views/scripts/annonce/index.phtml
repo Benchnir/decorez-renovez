@@ -1,0 +1,74 @@
+<?php
+if (is_array($this->formMessages) && !empty($this->formMessages))
+{
+    echo $this->partial('_partials/messenger.phtml', array('data' => $this->formMessages));
+}
+?>
+
+<div id="searchdiv">
+    <form method="post">
+        <div class="column">
+            <?php echo $this->form->getElement('department'); ?>
+            <?php echo $this->form->getElement('job'); ?>
+        </div>
+        <div class="column">
+            <?php echo $this->form->getElement('budget'); ?>
+            <?php echo $this->form->getElement('duration'); ?>
+        </div>
+        <input class="submitbutton" type="submit" name="submit" id="submitbutton" value="Rechercher">
+    </form>
+
+    <div id="pub">
+        <div style="margin-right: 5px;text-align: right; color: #f2bb33;">publicité <img src="<?php echo $this->baseUrl('images/carre.gif'); ?>" width="6" height="7" style="position: relative;top: -3px;" alt="publicité partenaires travaux"/></div>
+        <?php echo $this->partial('_partials/pubs/728x90_1.phtml'); ?>
+    </div>
+    
+    <div class="pancarte">
+        <a href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'creation')); ?>"><img src="<?php echo $this->baseUrl('images/deposer_mon_annonce.png'); ?>" alt="deposer annonce chantier travaux"></a>
+    </div>
+    
+    <img id="search-topleft" src="<?php echo $this->baseUrl('images/rond2.png'); ?>" width="6" height="7">
+    <img id="search-topright" src="<?php echo $this->baseUrl('images/rond2.png'); ?>" width="6" height="7">					
+    <img id="search-botleft" src="<?php echo $this->baseUrl('images/rond2.png'); ?>" width="6" height="7">
+    <img id="search-botright" src="<?php echo $this->baseUrl('images/rond2.png'); ?>" width="6" height="7">
+</div>
+
+<?php if (isset($this->annoncesTopList) && count($this->annoncesTopList) > 0): ?>
+    <?php foreach ($this->annoncesTopList as $annonce): ?>
+        <?php
+        if ($this->user != null)
+            $isOwner = ($annonce->getMember()->getId() == $this->user->getId()) ? true : false;
+        else
+            $isOwner = false;
+
+        $avatars = $annonce->getMember()->getAvatars();
+        if(count($avatars) > 0){
+            $avatar = $avatars->get(0);
+        } else {
+            $avatar = null;
+        }
+        echo $this->partial('_partials/annonce.phtml', array('annonce' => $annonce, 'avatar' => $avatar, 'show' => true));
+        ?>
+    <?php endforeach; ?>	
+<?php endif; ?>
+
+<?php if (isset($this->annonces) && count($this->annonces) > 0): ?>
+    <?php foreach ($this->annonces as $annonce): ?>
+        <?php
+        if ($this->user != null)
+            $isOwner = ($annonce->getMember()->getId() == $this->user->getId()) ? true : false;
+        else
+            $isOwner = false;
+
+        $avatars = $annonce->getMember()->getAvatars();
+        if(count($avatars) > 0){
+            $avatar = $avatars->get(0);
+        } else {
+            $avatar = null;
+        }
+        echo $this->partial('_partials/annonce.phtml', array('annonce' => $annonce, 'avatar' => $avatar, 'show' => true));
+        ?>
+    <?php endforeach; ?>	
+
+    <?php echo $this->paginationControl($this->annonces, 'Elastic', '_partials/pagination.phtml'); ?>
+<?php endif; ?>

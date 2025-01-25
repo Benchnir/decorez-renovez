@@ -1,0 +1,15 @@
+#formInline label {
+    float: left;
+    width: 230px;
+}
+
+#formInline dd {
+    margin: 5px;
+}
+
+#formInline fieldset {
+   border: none;
+}
+
+
+

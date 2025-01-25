@@ -1,0 +1,127 @@
+
+<?php
+/* @var $service \Default_Model_Base_Service */
+$service = $this->service;
+/* @var $member \Default_Model_Base_Member */
+$member = $service->getMember();
+/* @var $feature \Default_Model_Base_Feature */
+$feature = $member->getFeature();
+
+$commentsInfo = $this->commentsInfo;
+?>
+
+
+
+<div class="serviceDiv">
+    <?php if ($feature->isPartner()){ ?>
+    <div class="picto_partenaire">
+        <img width="50" height="49" alt="chantier urgente" src="<?php echo $this->baseUrl('images/picto_partenaire.png'); ?>" />
+    </div>
+    <?php } ?>
+    
+    <div class="col4">
+        <?php 
+            $serviceJobDisplay = $this->service->getMainJob();
+            if($this->askedJob != null){
+                foreach ($this->service->getJobs() as $serviceJob){
+                    if($serviceJob->getJob()->getId() == $this->askedJob){
+                        $serviceJobDisplay = $serviceJob;
+                    }
+                } 
+            }
+        ?>
+        <?php if($serviceJobDisplay != null){ ?>
+        <?php
+        if($this->askedBudget != null){
+            switch ($this->askedBudget){
+                case 1:
+                    $duration = '2 jours';
+                    $prixperhour = $this->service->getMainJob()->getPrice1();
+                    $prix = ($this->service->getMainJob()->getPrice1() * 14);
+                    break;
+                case 2:
+                    $duration = '2 jours';
+                    $prixperhour = $this->service->getMainJob()->getPrice1();
+                    $prix = ($this->service->getMainJob()->getPrice1() * 14);
+                    break;
+                case 3:
+                    $duration = '10 jours';
+                    $prixperhour = $this->service->getMainJob()->getPrice2();
+                    $prix = ($this->service->getMainJob()->getPrice2() * 70);
+                    break;
+                case 4:
+                    $duration = '30 jours';
+                    $prixperhour = $this->service->getMainJob()->getPrice3();
+                    $prix = ($this->service->getMainJob()->getPrice3() * 210);
+                    break;
+            }
+        } else {
+            $duration = '2 jours';
+            $prixperhour = $this->service->getMainJob()->getPrice1();
+            $prix = ($this->service->getMainJob()->getPrice1() * 14);
+        }
+        ?>
+        <div class="title">
+            En <?php echo $serviceJobDisplay->getJob()->getName(); ?>: 
+        </div>
+        <div class="price" style="margin: auto;width: 134px;">
+            <div style="float: left; color: #18aaff;text-align: center; margin: 5px 10px;"><span style="font-size: 22px; font-weight: bold;"><?php echo $prixperhour; ?>€</span><br> de l'heure</div>
+            <div style="float: left; color: #f4bd00;text-align: center; margin: 5px 10px;"><span style="font-size: 22px; font-weight: bold;">45</span><br>projets</div>
+        </div>
+        <div class="info">
+            soit pour <?php echo $duration; ?> <?php echo $prix; ?> &euro;
+        </div>
+        <div class="link">
+            <a href="<?php echo $this->url(array('controller' => 'service', 'action' => 'detail', 'id' => $this->service->getId())); ?>">Me contacter</a>
+        </div>
+        <?php } ?>
+    </div>
+    <div class="col3">
+        <div class="title">
+            Mes particularités: 
+        </div>
+        <div class="bulle">
+            <span style="font-size: 15px;font-weight: bold"><?php echo $this->commentsInfo['total']; ?></span><br/> avis
+        </div>
+        <div class="text">
+            <?php echo $this->service->getDescription(); ?>
+        </div>
+        <div class="link">
+            <a href="<?php echo $this->url(array('controller' => 'service', 'action' => 'detail', 'id' => $this->service->getId())); ?>">Témoignages</a>
+        </div>
+    </div>
+    <div class="col2">
+        <div class="title">
+            Je travaille surtout: 
+        </div>
+        <div class="serviceJob">
+            <?php foreach ($this->service->getJobs() as $serviceJob): ?>
+                <div>
+                    <a><?php echo $serviceJob->getJob()->getName(); ?></a>
+                    <?php echo $this->getStarsByEvaluation($serviceJob->getEvaluation()); ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <div class="link">
+            <a href="<?php echo $this->url(array('controller' => 'service', 'action' => 'detail', 'id' => $this->service->getId())); ?>">Plus de détails</a>
+        </div>
+    </div>
+    <div class="col1">
+        <div class="avatar">
+            <?php echo $this->getAvatar(isset($this->avatar)? $this->avatar->getPath():'avatar.jpg'); ?>
+        </div>
+        <div class="mainjob">
+            ARTISANT
+        </div>
+        <div class="name">
+            <?php echo $this->service->getMember()->getSplitName(); ?>
+        </div>
+        <div class="note">
+            Note: <?php echo $this->getStarsByNotation($this->commentsInfo['note']); ?>
+        </div>
+        <div class="experience">
+            Experience: <?php echo ($this->service->getExperience() != null)? $this->service->getExperience().' ans':'-'; ?>
+        </div>
+    </div>
+    <div style="clear: right"></div>
+</div>

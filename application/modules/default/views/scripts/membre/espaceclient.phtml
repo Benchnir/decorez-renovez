@@ -1,0 +1,70 @@
+<div class="headinfo">
+    Déposer votre profile sur <span class="link">decorez-renovez.fr</span> est gratuit et très simple. 
+    Votre annonce sera validé par notre équipe éditorial avant d'être mis en ligne.
+    Voir les règles de diffusion.
+</div>
+
+<div class="pictinfo">
+    <img src="<?php echo $this->baseUrl('images/flecheexplication.png'); ?>" width="23" height="24" />	
+    <h1>Remplissez vos autres domaines d’activités, vos prix indicatifs et donnez vous une note</h1>
+    <div class="text">info : mettez plus d’étoiles dans l’activité où vous voulez travailler d’avantage</div>
+</div>
+
+<div class="box" style="position: relative;">
+    <form method="POST" enctype="multipart/form-data" action="<?php echo $this->url(array('controller' => 'membre', 'action' => 'edituser')); ?>">
+        <div style="float: right">
+            <div><?php echo $this->getAvatar(isset($this->avatars[0])?$this->avatars[0]->getPath():'avatar.jpg', 135, 200); ?></div>
+            <div id="edit-user-submit-div"><input type="submit" value="modifier" /></div>
+        </div>
+        <table>
+            <tr>
+                <td class="label">Nom :</td>
+                <td><input type="text" name="lastname" value="<?php echo $this->member->getLastname(); ?>" /></td>
+            </tr>
+            <tr>
+                <td class="label">Pr&eacute;nom :</td>
+                <td><input type="text" name="firstname" value="<?php echo $this->member->getFirstname(); ?>" /></td>
+            </tr>
+            <tr>
+                <td class="label">Email :</td>
+                <td><?php echo $this->member->getEmail(); ?></td>
+            </tr>
+            <tr>
+                <td class="label">T&eacute;l&eacute;phone :</td>
+                <td><input type="text" name="phone" value="<?php echo $this->member->getPhone(); ?>" /></td>
+            </tr>
+            <tr>
+                <td class="label">Photo :</td>
+                <td><input type="file" name="avatar" /></td>
+            </tr>
+            <tr>
+                <td class="label">Je suis :</td>
+                <td>Un particulier</td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div class="content inner">
+    <div class="content center">
+        <a class="buttonBase" href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'creation')); ?>">Cr&eacute;er une annonce</a>
+    </div>
+
+    <p>Listes de vos annonces :</p>
+    <?php 
+    if (isset($this->annonces) && count($this->annonces) > 0){
+        foreach ($this->annonces as $annonce){
+            if(isset($this->avatars[0]) && $this->avatars[0] != null){
+                $avatar = $this->avatars[0];
+            } else {
+                $avatar = null;
+            }
+            echo $this->partial('_partials/annonce.phtml', array('annonce' => $annonce, 'avatar' => $avatar, 'option' => true, 'modification' => true));
+        }
+        echo $this->paginationControl($this->annonces, 'Elastic', '_partials/pagination.phtml');
+    } else {
+        echo 'Vous n\'avez pas encore posté d\'annonce.';
+    }
+    ?>
+</div>
+

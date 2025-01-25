@@ -1,0 +1,65 @@
+<?php if ($this->pageCount): ?>
+    <div id="pager">		
+        <ul id="pagination">
+
+            <!-- First page link -->
+            <?php if (isset($this->previous)): ?>
+                <li class="enabled"><a href="<?php echo $this->url(array('page' => $this->first)); ?>">
+                        &lt;&lt; D&eacute;but
+                    </a></li>
+            <?php else: ?>
+                <li><span class="disabled">&lt;&lt; D&eacute;but</span></li>
+            <?php endif; ?>
+
+            <!-- Previous page link -->
+            <?php if (isset($this->previous)): ?>
+                <li class="enabled"><a href="<?php echo $this->url(array('page' => $this->previous)); ?>">
+                        &lt; Pr&eacute;c&eacute;dent
+                    </a></li>
+            <?php else: ?>
+                <li><span class="disabled">&lt; Pr&eacute;c&eacute;dent</span></li>
+            <?php endif; ?>
+
+            <!-- Numbered page links -->
+            <?php foreach ($this->pagesInRange as $page): ?>
+                <?php if ($page == $this->current && $page == $this->last): ?>
+                    <li>
+                        <span class="active"><?php echo $page; ?></span>
+                    </li>
+                <?php elseif ($page == $this->current && $page != $this->last): ?>
+                    <li>
+                        <span class="active"><?php echo $page; ?></span>&nbsp;-
+                    </li>
+                <?php elseif ($page == $this->last): ?>
+                    <li>
+                        <span><a href="<?php echo $this->url(array('page' => $page)); ?>"><?php echo $page; ?></a></span>
+                    </li>
+                <?php else: ?>
+                    <li>
+                        <span><a href="<?php echo $this->url(array('page' => $page)); ?>"><?php echo $page; ?></a> - </span>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+
+            <!-- Next page link -->
+            <?php if (isset($this->next)): ?>
+                <li class="enabled"><a href="<?php echo $this->url(array('page' => $this->next)); ?>">
+                        Suivant &gt;
+                    </a></li>
+            <?php else: ?>
+                <li><span class="disabled">Suivant &gt;</span></li>
+            <?php endif; ?>
+
+            <!-- Last page link -->
+            <?php if (isset($this->next)): ?>
+                <li class="enabled"><a href="<?php echo $this->url(array('page' => $this->last)); ?>">
+                        Fin
+                    </a></li>
+            <?php else: ?>
+                <li><span class="disabled">Fin &gt;&gt;</span></li>
+            <?php endif; ?>
+
+        </ul>
+        <h1 class="allresults">(<?php echo $this->totalItemCount; ?> r&eacute;sultats)</h1>
+    </div>
+<?php endif; ?>

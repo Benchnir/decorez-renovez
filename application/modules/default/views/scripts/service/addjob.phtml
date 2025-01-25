@@ -1,0 +1,96 @@
+<div class="pictinfo">
+    <img src="<?php echo $this->baseUrl('images/flecheexplication.png'); ?>" width="23" height="24" />
+    <h1>Remplissez votre grille de prix</h1>
+    <div class="text">info : pour valider la grille doit respecter les règles suivantes</div>
+</div>
+
+<div class="list_requirements">
+    <div>- Ne mettez que des chiffres ronds sans virgules</div>
+    <div>- La différences des prix doit être d'un ecart minimum de 5 &euro;</div>
+    <div>- Le premier prix doit être supérieur à 10 &euro;</div>
+</div>
+
+<div id="servicejobcontainer" style="margin-top: 10px;">
+    <div class="servicejobdiv">
+        <form method="POST" action="<?php echo $this->url(array('controller' => 'service', 'action' => 'addjob')); ?>">
+            <div style="text-align: center">
+                <label for="job" class="required">Mes prix pour : </label>
+                <?php echo $this->addServiceJobForm->job->renderViewHelper(); ?>
+                <input type="hidden" id="evaluation" name="evaluation" value="<?php echo (isset($this->evaluation)? $this->evaluation:0); ?>" />
+                ma note: 
+                <div style="display: inline;position: relative;top: 2px;" id="star"></div>
+            </div>
+            <div style="margin-top: 35px;">
+                <input style="margin-left: 261px;" class="textprix <?php echo (isset($this->errors['prix2']) && $this->errors['prix2'] != null)? 'red':''; ?>" type="text" name="prix2" id="prix2" value="<?php echo $this->price1; ?>"><span style="font-size: 24px;font-weight: bold;position: relative;top: 4px;left: -6px;">&euro;</span>
+                <input style="margin-left: 46px;" class="textprix <?php echo (isset($this->errors['prix10']) && $this->errors['prix10'] != null)? 'red':''; ?>" type="text" name="prix10" id="prix10" value="<?php echo $this->price2; ?>"><span style="font-size: 24px;font-weight: bold;position: relative;top: 4px;left: -6px;">&euro;</span>
+                <input style="margin-left: 46px;" class="textprix <?php echo (isset($this->errors['prix30']) && $this->errors['prix30'] != null)? 'red':''; ?>" type="text" name="prix30" id="prix30" value="<?php echo $this->price3; ?>"><span style="font-size: 24px;font-weight: bold;position: relative;top: 4px;left: -6px;">&euro;</span>
+            </div>
+            <div style="margin-top: 56px;font-size: 12px;">
+                <div style="float: left; margin-left: 235px;text-align: center;width: 100px;">
+                    de 1 à 2 j<br/>
+                    <span style="color: red">
+                        soit pour<br/> 
+                        2 jours <span id="pricesum1">0</span> &euro;
+                    </span>
+                </div>
+                <div style="float: left; margin-left: 16px;text-align: center;width: 100px;">
+                    de 2 à 10 j<br/>
+                    <span style="color: red">
+                        soit pour<br/> 
+                        10 jours <span id="pricesum2">0</span> &euro;
+                    </span>
+                </div>
+                <div style="float: left; margin-left: 16px;text-align: center;width: 100px;">
+                    de 10 à 30 j<br/>
+                    <span style="color: red">
+                        soit pour<br/> 
+                        30 jours <span id="pricesum3">0</span> &euro;
+                    </span>
+                </div>
+            </div>
+            <div id="edit-servicejob-submit-div">
+                <input type="submit" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div style="text-align: center;margin-top: 10px;"><a class="button_orange" href="<?php echo $this->url(array('controller' => 'membre', 'action' => 'index')); ?>">Retour</a></div>
+
+<script type="text/javascript" src="<?php echo $this->baseUrl('js/jquery.raty.min.js');?>"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#star').raty({
+            starOff: '<?php echo $this->baseUrl('images/star-off.png'); ?>',
+            starOn: '<?php echo $this->baseUrl('images/star-on.png'); ?>',
+            score: <?php echo (isset($this->evaluation)? $this->evaluation:0); ?>,
+            click: function(score, evt) {
+                $("#evaluation").val(score);
+            }
+        });
+
+        $('#job').change(function(){
+            if($(this).val() == 'new'){
+                window.location = "<?php echo $this->url(array('controller' => 'service', 'action' => 'newjob')); ?>"
+            }
+        });
+        $('#prix2').keyup(function(){
+            var val = parseInt($(this).val());
+            if(typeof val === "number" && val != ''){
+                $('#pricesum1').text(val*14);
+            }
+        });
+        $('#prix10').keyup(function(){
+            var val = parseInt($(this).val());
+            if(typeof val === "number" && val != ''){
+                $('#pricesum2').text(val*70);
+            }
+        });
+        $('#prix30').keyup(function(){
+            var val = parseInt($(this).val());
+            if(typeof val === "number" && val != ''){
+                $('#pricesum3').text(val*210);
+            }
+        });
+    });
+</script>

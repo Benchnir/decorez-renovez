@@ -1,0 +1,170 @@
+<?php
+ if(isset($this->isOwner) && $this->isOwner == true){
+     $linkRedirection = $this->url(array('controller' => 'annonce', 'action' => 'detail', 'id' => $this->annonce->getId()));
+ } else {
+     $linkRedirection = $this->url(array('controller' => 'annonce', 'action' => 'show', 'id' => $this->annonce->getId()));
+ }
+?>
+<div class="annonceDiv">
+    <?php if ($this->annonce->IsUrgent()){ ?>
+    <div class="picto_partenaire">
+        <img width="50" height="49" alt="chantier urgent" src="<?php echo $this->baseUrl('images/picto_urgent.png'); ?>">
+    </div>
+    <?php } ?>
+    
+    <div class="col4">
+        <div class="title" style="font-size: 13px;">
+            Budget environ: 
+        </div>
+        <div class="budget">
+            <?php echo \Default_Model_Base_Budget::getBudgetDescription($this->annonce->getBudget()); ?>
+        </div>
+        <div class="title" style="font-size: 13px;margin-top: 5px;">
+            Pour environ: 
+        </div>
+        <div class="duration">
+            <?php echo \Default_Model_Base_Duration::getDurationDescription($this->annonce->getDuration()); ?>
+        </div>
+    </div>
+    <div class="col3">
+        <div class="title">
+            Description: 
+            
+            <?php if ($this->annonce->IsUrgent()){ ?>
+                <img style="position: absolute;left: 550px;" src="<?php echo $this->baseUrl('images/picto_urgent.gif'); ?>">
+            <?php } ?>
+        </div>
+        
+        <div class="text">
+            <?php echo $this->annonce->getDescription(); ?>
+        </div>
+        <?php if(isset($this->modification)){ ?>
+        <div class="link">
+            <a href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'modification', 'id' => $this->annonce->getId())); ?>">Modification</a>
+        </div>
+        <?php } ?>
+    </div>
+    <div class="col2">
+        <div class="title">
+            Besoin surtout de:
+        </div>
+        
+        <div class="jobs">
+            <?php $i = 0; ?>
+            <?php foreach ($this->annonce->getJobs() as $job){ ?>
+            <?php if($i<3){ ?>
+                <div><a><?php echo $job->getName(); ?></a></div>
+            <?php } ?>
+            <?php $i++; ?>
+            <?php } ?>
+        </div>
+        <?php if(isset($this->option)){ ?>
+        <div class="link">
+            <a href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'detail', 'id' => $this->annonce->getId())); ?>">Options</a>
+        </div>
+        <?php } ?>
+        <?php if(isset($this->show)){ ?>
+        <div class="link">
+            <a href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'show', 'id' => $this->annonce->getId())); ?>">Détail</a>
+        </div>
+        <?php } ?>
+    </div>
+    <div class="col1">
+        <div class="avatar">
+            <?php echo $this->getAvatar(isset($this->avatar)? $this->avatar->getPath():'avatar.jpg', 50, 75); ?>
+        </div>
+        <div class="mainjob">
+            Particulier
+        </div>
+        <div class="name">
+            <?php echo $this->annonce->getMember()->getFirstname(); ?><br/>
+            <?php echo $this->annonce->getMember()->getLastname(); ?>
+        </div>
+        <div class="department">
+            Department: <span style="padding: 3px;background: #f4bd00; color: white"><?php echo $this->annonce->getDepartment()->getId(); ?></span>
+        </div>
+        <div class="date">
+            Déposée le <?php echo $this->annonce->getCreatedAt()->format('d/m/Y'); ?>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+    <?php if ($this->annonce->IsUrgent()): ?>
+        <div class="content box annonce_urgent" style="margin: 10px; padding: 0px;">
+            
+<div class="left separator">
+    <div class="user inner">
+        <div>
+            <?php echo $this->getAvatar(isset($this->avatar)? $this->avatar->getPath():'avatar.jpg'); ?>
+        </div>
+
+        <div class="username">
+            <?php if ($this->annonce->getMember()->getRole() == 'pro'): ?>
+                <div class="metier_subtitle">
+                    <?php echo $this->annonce->getMember()->getCompanyName(); ?>
+                </div>
+            <?php else: ?>
+                <div class="metier_subtitle">
+                    PARTICULIER
+                </div>
+            <?php endif; ?>
+            <h2>
+                <?php echo $this->annonce->getMember()->getSplitName(); ?>
+            </h2>
+        </div>
+        <div class="clear">
+            <a>D&eacute;partement : <?php echo $this->annonce->getDepartment()->getName(); ?></a>
+            <h2>D&eacute;pos&eacute;e le <?php echo $this->annonce->getCreatedAt()->format('d/m/Y'); ?></h2>
+        </div>
+    </div>						
+</div>
+
+<div class="left separator">						
+</div>
+
+<div class="left separator">
+    <div class="profil inner">
+        <h2>Description chantier:</h2>
+        <p><?php echo $this->annonce->getDescription(); ?></p>
+    </div>
+</div>
+
+<div class="left">
+    <div class="price inner">
+
+        <div class="chantierprix">
+            <h2>Budget environ:</h2>
+            <h1><?php echo \Default_Model_Base_Budget::getBudgetDescription($this->annonce->getBudget()); ?></h1>
+        </div>
+
+        <div class="nbjours">
+            <h2>Pour environ:</h2>
+            <h1><?php echo \Default_Model_Base_Duration::getDurationDescription($this->annonce->getDuration()); ?></h1>
+        </div>
+    </div>
+</div>
+
+<div class="content center buttonContainer">
+    <?php if (isset($this->isDetail) && $this->isDetail === false): ?>
+        <a class="buttonBase" href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'show', 'id' => $this->annonce->getId())); ?>">+ d'informations</a>
+    <?php endif; ?>
+    <?php if (isset($this->isOwner) && $this->isOwner === true): ?>
+        <a class="buttonBase" href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'modification', 'id' => $this->annonce->getId())); ?>">Modifier</a>
+    <?php endif; ?>
+</div>
+    <?php endif; ?>
+</div>
+    
+    -->

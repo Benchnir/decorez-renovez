@@ -1,0 +1,13 @@
+.DS_Store
+.htpasswd
+vendor/
+composer.lock
+.env
+*.log
+tmp/
+cache/
+config/autoload/*.local.php
+data/logs/
+data/cache/
+data/session/
+public/uploads/

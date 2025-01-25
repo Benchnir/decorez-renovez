@@ -1,0 +1,6 @@
+<?php
+
+if (is_array($this->formMessages) && !empty($this->formMessages)) {
+    echo $this->partial('_partials/messenger.phtml', array('data' => $this->formMessages));
+}
+?>

@@ -1,0 +1,9 @@
+<div>
+    <?php foreach($this->jobs as $job){ ?>
+        <div>
+            <div><?php echo $job->getName(); ?></div>
+            <div><a href="<?php echo $this->url(array('controller' => 'job', 'action' => 'accept', 'id' => $job->getId())); ?>">Accepter</a></div>
+            <div><a href="<?php echo $this->url(array('controller' => 'job', 'action' => 'refuse', 'id' => $job->getId())); ?>">Refuser</a></div>
+        </div>
+    <?php } ?>
+</div>

@@ -1,0 +1,106 @@
+<?php echo $this->doctype() ?>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Decorez-Renovez.fr l'outil indispensable pour vos travaux</title>
+        <link rel="shortcut icon" href="/images/favicon.ico" type="/images/favicon">
+        <?php echo $this->headTitle() ?>
+        <?php echo $this->headLink() ?>
+        <?php echo $this->headStyle() ?>
+        <?php echo $this->headScript() ?>
+    </head>
+    <body>
+
+        <div id="wrapper">
+
+            <div class="clear"></div>
+
+            <div id="sidebar">
+                <div class="hg" ><div class="hd" ><div class="bg" ><div class="bd" >
+                                <div class="inner">
+                                    <div class="logo"><a href="http://www.decorez-renovez.com"><img src="/images/logo.png" width="136" height="45" alt="decorez renovez"></a></div>
+                                    <div class="pub1">
+                                        <div>publicité<img src="/images/carre.gif" width="6" height="7" style="margin-left:5px;" alt="publicité travaux"></div>
+                                        <object id="FlashID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="140" height="600" title="decorez-renovez.fr">
+                                            <param name="movie" value="/images/decorezrenovez120x600.swf"/>
+                                            <!--[if !IE]>-->
+                                            <object type="application/x-shockwave-flash" data="/images/decorezrenovez120x600.swf" width="120" height="600">
+                                                <!--<![endif]-->
+                                                <div>
+                                                    <h4>Le contenu de cette page nécessite une version plus récente d’Adobe Flash Player.</h4>
+                                                    <p><a href="http://www.adobe.com/go/getflashplayer">
+                                                            <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif"	
+                                                                 alt="Obtenir le lecteur Adobe Flash" width="112" height="33">
+                                                        </a></p>
+                                                </div>
+                                                <!--[if !IE]>-->
+                                            </object>
+                                            <!--<![endif]-->
+                                        </object>				
+                                    </div>
+                                    <div class="logo"><img src="/images/pub_travaux.jpg"  alt="Gros Travaux"></div>
+                                </div>
+                            </div></div></div></div>
+            </div>
+
+            <div id="container">
+
+                <div id="nav">
+                    <ul>
+                        <li>
+                            <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'index')); ?>">Acceuil</a>
+                            <img src="/images/separation_nav.jpg" width="1" height="21" alt="separation">
+                        </li>
+                        <!--                        <li>
+                                                    <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'index')); ?>">Espace Pro</a>
+                                                    <img src="/images/separation_nav.jpg" width="1" height="21" alt="separation">
+                                                </li>-->
+                        <!--                        <li>
+                                                    <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'index')); ?>">Chantiers</a>
+                                                    <img src="/images/separation_nav.jpg" width="1" height="21" alt="separation">
+                                                </li>-->
+                        <li>
+                            <a href="<?php echo $this->url(array('controller' => 'service', 'action' => 'index')); ?>">Meilleurs Services</a>
+                            <img src="/images/separation_nav.jpg" width="1" height="21" alt="separation">
+                        </li>
+                        <li>
+                            <a href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'index')); ?>">Petites Annonces</a>
+                            <img src="/images/separation_nav.jpg" width="1" height="21" alt="separation">
+                        </li>
+                        <?php if ($this->user == null): ?>
+                            <li>
+                                <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'connexion')); ?>">Se Connecter</a>
+                            </li>
+                        <?php else: ?>
+                            <li>
+                                <a href="<?php echo $this->url(array('controller' => 'membre', 'action' => 'index')); ?>">Mon Compte</a>
+                                <img src="/images/separation_nav.jpg" width="1" height="21" alt="separation">
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'deconnexion')); ?>">Se D&eacute;connecter</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+
+                <div id="content">
+                    <?php echo $this->layout()->content ?>
+                </div>
+
+            </div>
+
+            <div class="clear"></div>
+
+            <div id="footer">
+                <a href="/article?page=5">Infos légales l</a>
+                <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'a-propos')); ?>">Qui sommes nous l</a> 
+                <a href="/article?page=5">Contact l</a>
+                <a href="/article?page=5">Publicité l</a>
+                <a href="/article?page=5">Règles de Diffusion l</a>
+                <a href="/article?page=5">Ajouter à mes favoris l</a>
+                <a href="/article?page=5">Partenaires l</a>
+            </div>
+
+            <div class="clear"></div>
+    </body>
+</html>

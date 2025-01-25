@@ -1,0 +1,35 @@
+<div class="clear" id="mini_comment-<?php echo $this->comment->getId(); ?>">
+    <div class="leftColumn inner" style="width:55px;">										
+        <div>
+            <?php 
+            $avatars = $this->comment->getMember()->getAvatars();
+            if($avatars != null && $avatars->count() > 0){
+                echo $this->getAvatar($avatars->get(0)->getPath()); 
+            }
+            ?>
+            <h4><?php echo $this->comment->getMember()->getSplitName(); ?></h4>
+        </div>
+    </div>
+    <div class="leftColumn post inner">
+        <?php if ($this->comment->getType() == My_Controller_Action::COMMENT_TYPE_NEGATIVE): ?>
+            <img src="/images/avisnegatif.gif" alt="avis negatif" />
+        <?php elseif ($this->comment->getType() == My_Controller_Action::COMMENT_TYPE_NEUTRAL): ?>
+            <img src="/images/avismoyen.gif" alt="avis negatif" />
+        <?php elseif ($this->comment->getType() == My_Controller_Action::COMMENT_TYPE_POSITIVE): ?>
+            <img src="/images/avispositif.gif" alt="avis negatif" />
+        <?php endif; ?>
+        <p><?php echo nl2br($this->comment->getMessage()); ?></p>
+    </div>
+    <div class="inner">
+        <h2 class="date"><?php echo $this->comment->getCreatedAt()->format('d/m/Y'); ?></h2>
+    </div>
+    <div class="inner leftColumn">
+        <?php if ($this->comment->getStatus() != My_Controller_Action::COMMENT_STATUS_ACTIVE): ?>
+        <li id="link2-<?php echo $this->comment->getId(); ?>"><a href="#" onClick="valider(<?php echo $this->escape($this->comment->getId()); ?>);">Valider</a></li>
+        <?php endif; ?>
+        <?php if ($this->comment->getStatus() != My_Controller_Action::COMMENT_STATUS_MODERATED): ?>
+        <li id="link2-<?php echo $this->comment->getId(); ?>"><a href="#" onClick="refuser(<?php echo $this->escape($this->comment->getId()); ?>);">Refuser</a>
+        <input type="text" name="reason-<?php echo $this->comment->getId(); ?>" /></li>
+        <?php endif; ?>
+    </div>
+</div>

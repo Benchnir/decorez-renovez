@@ -1,0 +1,89 @@
+<?php echo $this->doctype() ?>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Decorez-Renovez.fr l'outil indispensable pour vos travaux</title>
+        <link rel="shortcut icon" href="/images/favicon.ico" type="/images/favicon">
+        <?php echo $this->headTitle() ?>
+        <?php echo $this->headLink() ?>
+        <?php echo $this->headStyle() ?>
+        <?php echo $this->headScript() ?>
+    </head>
+    <body>
+
+        <div id="wrapper">
+
+            <div class="clear"></div>
+
+           <div class="banner" >
+				<div class="hg" ><div class="hd" ><div class="bg" ><div class="bd" >
+					<div class="bannercontent" >
+						<div class="leftColumn inner"><a href="http://www.decorez-renovez.com"><img src="images/logo.png" width="190" height="63" style="margin-right: -60px; padding-left: 50px;"alt="decorezrenovez.fr"/></a></div>
+						<div class="leftColumn"><p>Vous cherchez quelqu'un pour vous aider dans vos travaux ? Votre budget est limité ? <strong style="color: #4477B6; font-size: 14px;">Decorezrenovez.fr est là 
+						pour vous aider à trouver une personne de confiance. </strong></p></div>
+						<div class="accroche">L'OUTILS INDISPENSABLE POUR VOS TRAVAUX</div>
+					</div>
+				</div></div></div></div>
+            </div>
+
+            <div id="container">
+
+                <div id="nav">
+                    <ul>
+                        <li>
+                            <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'index')); ?>">Acceuil</a>
+                            <img src="/images/separation_nav.jpg" width="1" height="21" alt="separation">
+                        </li>
+                        <!--                        <li>
+                                                    <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'index')); ?>">Espace Pro</a>
+                                                    <img src="/images/separation_nav.jpg" width="1" height="21" alt="separation">
+                                                </li>-->
+                        <!--                        <li>
+                                                    <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'index')); ?>">Chantiers</a>
+                                                    <img src="/images/separation_nav.jpg" width="1" height="21" alt="separation">
+                                                </li>-->
+                        <li>
+                            <a href="<?php echo $this->url(array('controller' => 'service', 'action' => 'index')); ?>">Meilleurs Services</a>
+                            <img src="/images/separation_nav.jpg" width="1" height="21" alt="separation">
+                        </li>
+                        <li>
+                            <a href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'index')); ?>">Petites Annonces</a>
+                            <img src="/images/separation_nav.jpg" width="1" height="21" alt="separation">
+                        </li>
+                        <?php if ($this->user == null): ?>
+                            <li>
+                                <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'connexion')); ?>">Se Connecter</a>
+                            </li>
+                        <?php else: ?>
+                            <li>
+                                <a href="<?php echo $this->url(array('controller' => 'membre', 'action' => 'index')); ?>">Mon Compte</a>
+                                <img src="/images/separation_nav.jpg" width="1" height="21" alt="separation">
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'deconnexion')); ?>">Se D&eacute;connecter</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+
+                <div id="content">
+                    <?php echo $this->layout()->content ?>
+                </div>
+
+            </div>
+
+            <div class="clear"></div>
+
+            <div id="footer">
+                <a href="/article?page=5">Infos légales l</a>
+                <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'a-propos')); ?>">Qui sommes nous l</a> 
+                <a href="/article?page=5">Contact l</a>
+                <a href="/article?page=5">Publicité l</a>
+                <a href="/article?page=5">Règles de Diffusion l</a>
+                <a href="/article?page=5">Ajouter à mes favoris l</a>
+                <a href="/article?page=5">Partenaires l</a>
+            </div>
+
+            <div class="clear"></div>
+    </body>
+</html>

@@ -1,0 +1,20 @@
+<?php
+if (is_array($this->formMessages) && !empty($this->formMessages))
+{
+    echo $this->partial('_partials/messenger.phtml', array('data' => $this->formMessages));
+}
+?>
+<div class="content box" style="margin-top: 10px">
+    <div class="leftColumn">
+        <h1>Se connecter</h1>
+        <?php echo $this->form; ?>
+        <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'recuperation')); ?>">Mot de passe perdu ?</a>
+    </div>
+</div>
+
+<div class="box" style="margin-top: 10px">
+    <div>
+        <h1>Pas encore inscrit ?</h1>
+        <a href="<?php echo $this->url(array('controller' => 'membre', 'action' => 'inscription')); ?>">Cr&eacute;er mon compte maintenant</a>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+<?php
+$link = 'http://'.$_SERVER['HTTP_HOST'].'/';
+?>
+<div class="pictinfo-whithouttext">
+    <img src="<?php echo $this->baseUrl('images/flecheexplication.png'); ?>" width="23" height="24" />	
+    <h1>Démarquez vous !</h1>
+</div>
+
+<div class="box">
+    <div class="feature-option-field">
+        <div class="feature-option-rightimage"><img src="<?php echo $this->baseURL('images/option_annonce_img1.jpg'); ?>" /></div>
+        
+        <div class="feature-option-field-head"><input type="checkbox" checked="checked"/>Remontez mon annonce en tête de liste <span class="greenbutton">Nouveau !</span></div>
+        <div class="feature-option-field-info">repositionnez automatiquement votre annonce en première page des listes de résultats</div>
+
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="width: 560px;">
+            <div style="float: right; margin-top: 20px;">
+                <input alt="Effectuez vos paiements via PayPal : une solution rapide, gratuite et sécurisée" name="submit" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_buynow_LG.gif" type="image" /><img src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" border="0" alt="" width="1" height="1" />
+            </div>
+            <div><label><input type="radio" name="amount" value="12.00" checked="checked">Chaque jour pendant 7 jours <strong>(12&euro; TTC)</strong></label></div>
+            <div><label><input type="radio" name="amount" value="24.00">Chaque semaine pendant 3 mois <strong>(24&euro; TTC)</strong></label></div>
+
+            <input name="currency_code" type="hidden" value="EUR" />
+            <input name="shipping" type="hidden" value="0.00" />
+            <input name="tax" type="hidden" value="0.00" />
+            <input name="return" type="hidden" value="<?php echo $link; ?>annonce/detail/id/<?php echo $this->annonce->getId(); ?>" />
+            <input name="cancel_return" type="hidden" value="<?php echo $link; ?>annonce/detail/id/<?php echo $this->annonce->getId(); ?>" />
+            <input name="notify_url" type="hidden" value="<?php echo $link; ?>annonce/maketoplist" />
+            <input name="cmd" type="hidden" value="_xclick" />
+            <input name="business" type="hidden" value="paiement@decorezrenovez.fr" />
+            <input name="item_name" type="hidden" value="Option Toplist pour Annonce" />
+            <input name="no_note" type="hidden" value="1" />
+            <input name="lc" type="hidden" value="FR" />
+            <input name="bn" type="hidden" value="PP-BuyNowBF" />
+    <input name="custom" type="hidden" value="annonce_id=<?php echo $this->annonce->getId(); ?>" />
+        </form>
+        <div class="feature-option-info">
+            <?php if($this->annonce->isTopList()){ ?>
+                Votre annonce restera en haut des listes jusqu'au <?php echo $this->annonce->getTopListExpireAt()->format('d/m/Y'); ?>
+            <?php } else { ?>
+                Votre annonce n'est pas encore en haut des listes
+            <?php } ?>
+        </div>
+    </div>
+    
+    
+    <div class="feature-option-field">
+        <div class="feature-option-field-head"><input type="checkbox" checked="checked"/>Ajouter un logo "urgent" + flèche et encart rouge pour vous differencier</div>
+        <div class="feature-option-field-info">votre profil sera en moyenne 10 fois plus consulté</div>
+
+        <div class="feature-option-rightimage"><img src="<?php echo $this->baseURL('images/option_annonce_img2.jpg'); ?>" /></div>
+        
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="width: 560px;">
+            <div style="float: right; margin-top: 20px;">
+                <input alt="Effectuez vos paiements via PayPal : une solution rapide, gratuite et sécurisée" name="submit" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_buynow_LG.gif" type="image" /><img src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" border="0" alt="" width="1" height="1" />
+            </div>
+            <div><label><input type="radio" name="amount" value="5.00" checked="checked">pendant 1 mois <strong>(5&euro; TTC)</strong></label></div>
+            <div><label><input type="radio" name="amount" value="25.00">pendant 6 mois <strong>(25&euro; TTC)</strong></label></div>
+
+            <input name="currency_code" type="hidden" value="EUR" />
+            <input name="shipping" type="hidden" value="0.00" />
+            <input name="tax" type="hidden" value="0.00" />
+            <input name="return" type="hidden" value="<?php echo $link; ?>annonce/detail/id/<?php echo $this->annonce->getId(); ?>" />
+            <input name="cancel_return" type="hidden" value="<?php echo $link; ?>annonce/detail/id/<?php echo $this->annonce->getId(); ?>" />
+            <input name="notify_url" type="hidden" value="<?php echo $link; ?>annonce/makeurgent" />
+            <input name="cmd" type="hidden" value="_xclick" />
+            <input name="business" type="hidden" value="paiement@decorezrenovez.fr" />
+            <input name="item_name" type="hidden" value="Option Urgent pour Annonce" />
+            <input name="no_note" type="hidden" value="1" />
+            <input name="lc" type="hidden" value="FR" />
+            <input name="bn" type="hidden" value="PP-BuyNowBF" />
+    <input name="custom" type="hidden" value="annonce_id=<?php echo $this->annonce->getId(); ?>" />
+        </form>
+        
+        <div class="feature-option-info">
+            <?php if($this->annonce->isUrgent()){ ?>
+                Votre annonce aura le status URGENT jusqu'au <?php echo $this->annonce->getUrgentExpireAt()->format('d/m/Y'); ?>
+            <?php } else { ?>
+                Votre annonce n'est pas encore urgente
+            <?php } ?>
+        </div>
+        <div style="clear: right"></div>
+    </div>
+    
+    <div class="feature-option-field-bottom">
+        En validant la diffusion de mon annonce, j'accepte les règles de diffusion et d'utilisation du site
+        decorez-renovez.fr et j'autorise decorez-renovez.fr à diffuser mon annonce.
+    </div>
+</div>
+
+
+<div style="margin-left: 356px;margin-top: 20px;">
+    <a class="button_orange" style="margin-right: 20px;" href="<?php echo $this->url(array('controller' => 'membre', 'action' => 'index')); ?>">&lt; Retour</a>
+</div>

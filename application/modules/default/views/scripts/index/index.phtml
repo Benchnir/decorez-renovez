@@ -1,0 +1,335 @@
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Decorez-Renovez.fr l'outil indispensable pour vos travaux</title>
+        <link rel="shortcut icon" href="images/favicon.ico" type="/images/favicon">
+        <?php echo $this->headTitle() ?>
+        <?php echo $this->headLink() ?>
+        <?php echo $this->headStyle() ?>
+        <?php echo $this->headScript() ?>
+        <?php $this->headScript()->appendFile($this->baseUrl('js/raphael-min.js'), 'text/javascript'); ?>
+        <script src="<?php echo $this->baseUrl('js/map.js'); ?>"></script>
+    </head>
+    <body>
+        <div id="wrap">
+            <header>
+                <img id="logo" src="<?php echo $this->baseUrl('images/logo.png'); ?>" alt="decorezrenovez"/>
+                <div style="color: red; font-weight: bold;font-size: 12px; position: absolute; left: 208px; top: 80px;">béta</div>
+
+                <div class="header-text1">
+                    Vous cherchez quelqu'un pour vous aider dans vos travaux ?<br/>
+                    Votre <strong>budget</strong> est limité ? <span class="bluebold">DecorezRenovez.fr est là pour
+                    vous aider à trouver une personne de confiance.</span>
+                </div>
+
+                <div style="clear:both"></div>
+
+                <div class="header-text2">
+                    <span class="bluelight">Déposez une annonce ou contactez en 2 clics un artisan</span>
+                </div>
+
+                <div style="clear:both"></div>
+
+                <img id="header-round-topleft" src="<?php echo $this->baseUrl('images/rond1.gif'); ?>" />
+                <img id="header-round-topright" src="<?php echo $this->baseUrl('images/rond1.gif'); ?>" />
+                <img id="header-round-botleft" src="<?php echo $this->baseUrl('images/rond1.gif'); ?>" />
+                <img id="header-round-botright" src="<?php echo $this->baseUrl('images/rond1.gif'); ?>" />
+            </header>
+
+            <div id="content">
+                <div id="content-header">
+                    <h2>Quel artisan recherchez vous ?.. Dans quelle région ?</h2>
+
+                    <div class="content-header-icon">
+                        <img id="fb-icon-link" src="<?php echo $this->baseUrl('images/fb-link-icon.png'); ?>" alt="facebook"/>
+                        <img id="tw-icon-link" src="<?php echo $this->baseUrl('images/tw-link-icon.png'); ?>" alt="twiter"/>
+                        <!--<img id="yt-icon-link" src="<?php echo $this->baseUrl('images/yt-link-icon.png'); ?>" width="32" alt="youtube"/>-->
+                    </div>
+
+                    <div style="clear:both"></div>
+                </div>
+
+                <?php
+                    if (is_array($this->formMessages) && !empty($this->formMessages)){
+                        echo $this->partial('_partials/messenger.phtml', array('data' => $this->formMessages));
+                    }
+                ?>
+
+                <div id="content-map">
+                    <div id="content-map-search">
+                        <div class="form-div">
+                            <form id="regionsearchannonce" action="<?php echo $this->url(array('controller' => 'service', 'action' => 'index')); ?>" method="post">
+                                <input type="hidden" id="search-region" name="region" value="all" />
+
+                                <div class="form-line">
+                                    <label for="job">Je cherche surtout :
+                                        <select name="job" id="job">
+                                            <option value="all" label="Tous les métiers">Tous les métiers</option>
+                                            <?php foreach($this->jobs as $job){ ?>
+                                            <option value="<?php echo $job->getId(); ?>"><?php echo $job->getName(); ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </label>
+                                </div>
+
+                                <div class="form-line">
+                                    <label for="budget">Je connais à peu près mon budget :
+                                        <select name="budget" id="budget">
+                                            <option value="all" label="-">-</option>
+                                            <option value="1" label="&lt; 500 €">&lt; 500 €</option>
+                                            <option value="2" label="entre 500 et 1000 €">entre 500 et 1000 €</option>
+                                            <option value="3" label="entre 1000 et 5000 €">entre 1000 et 5000 €</option>
+                                            <option value="4" label="&gt; 5000 €">&gt; 5000 €</option>
+                                        </select>
+                                    </label>
+                                </div>
+
+                                <div class="form-line">
+                                    <label for="duration">ou combien de jour de travail :
+                                        <select name="duration" id="duration">
+                                            <option value="all" label="-">-</option>
+                                            <option value="1" label="&lt; 1 jour">&lt; 1 jour</option>
+                                            <option value="2" label="entre 1 et 3 jours">entre 1 et 3 jours</option>
+                                            <option value="3" label="entre 3 et 7 jours">entre 3 et 7 jours</option>
+                                            <option value="4" label="Entre 7 et 14 jours">Entre 7 et 14 jours</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="bullepro">
+                            <a href="<?php echo $this->url(array('controller' => 'membre', 'action' => 'inscription')); ?>">Je m'inscris</a>
+                        </div>
+                    </div>
+                    <div id="content-map-map">
+                        <map name="france_map">
+                            <area class="shapefrance" shape="poly" title="Alsace" coords="383,88,381,92,372,93,367,89,361,92,364,98,369,99,371,108,365,114,370,124,362,146,370,149,366,154,369,161,378,162,385,157,381,151,385,122,397,96,397,89,385,87" data-regionid="2" onmouseover="change_image('http://decorez-renovez.dev', 1)" onmouseout="hide_image('http://decorez-renovez.dev', 1)" alt="Alsace">
+                            <area class="shapefrance" shape="poly" title="Aquitaine" coords="87,349,79,356,89,359,91,369,95,366,111,376,116,376,122,380,128,380,131,369,140,355,135,347,130,345,131,328,132,325,142,329,154,323,171,319,171,312,173,306,174,296,181,294,190,279,183,275,181,255,171,253,164,249,138,274,121,264,103,254,87,349" data-regionid="3" onmouseover="change_image('http://decorez-renovez.dev', 2)" onmouseout="hide_image('http://decorez-renovez.dev', 2)" alt="Aquitaine">
+                            <area class="shapefrance" shape="poly" title="Auvergne" coords="242,200,219,217,227,226,229,239,223,243,226,263,216,267,212,283,213,298,230,289,230,283,240,295,251,284,270,292,290,271,282,265,271,263,271,255,263,243,266,224,272,217,261,203,243,200" data-regionid="4" onmouseover="change_image('http://decorez-renovez.dev', 3)" onmouseout="hide_image('http://decorez-renovez.dev', 3)" alt="Auvergne">
+                            <area class="shapefrance" shape="poly" title="Basse-Normandie" coords="152,74,162,102,171,107,175,120,166,130,154,121,144,121,140,115,116,117,106,115,101,118,98,113,98,101,89,57,111,62,118,76" data-regionid="5" onmouseover="change_image('http://decorez-renovez.dev', 4)" onmouseout="hide_image('http://decorez-renovez.dev', 4)" alt="Basse-Normandie">
+                            <area class="shapefrance" shape="poly" title="Bourgogne" coords="253,124,243,126,240,133,243,145,236,154,241,198,262,202,272,216,272,222,277,229,288,224,289,219,300,222,302,210,313,211,318,195,311,189,318,173,315,159,311,161,300,154,298,144,293,140,289,144,272,145,260,136,253,123" data-regionid="6" onmouseover="change_image('http://decorez-renovez.dev', 5)" onmouseout="hide_image('http://decorez-renovez.dev', 5)" alt="Bourgogne">
+                            <area class="shapefrance" shape="poly" title="Bretagne" coords="68,163,92,152,105,146,114,137,112,117,102,119,98,116,96,111,88,105,60,107,44,96,0,106,2,142,48,166" data-regionid="7" onmouseover="change_image('http://decorez-renovez.dev', 6)" onmouseout="hide_image('http://decorez-renovez.dev', 6)" alt="Bretagne">
+                            <area class="shapefrance" shape="poly" title="Centre" coords="190,103,179,109,173,109,176,118,172,125,174,134,161,159,149,161,147,180,156,189,168,193,173,200,174,209,183,217,202,216,215,215,225,211,230,201,239,199,239,181,235,152,242,144,239,134,227,137,222,128,208,130,205,120,196,116,192,102" data-regionid="8" onmouseover="change_image('http://decorez-renovez.dev', 7)" onmouseout="hide_image('http://decorez-renovez.dev', 7)" alt="Centre">
+                            <area class="shapefrance" shape="poly" title="Champagne-Ardenne" coords="292,41,292,41,277,57,270,65,272,76,260,82,260,96,253,105,257,113,254,122,260,135,272,144,289,142,292,139,298,142,301,152,311,159,319,156,325,156,323,147,328,143,323,139,321,128,315,126,313,120,301,110,298,98,300,93,299,82,303,77,301,68,311,66" data-regionid="9" onmouseover="change_image('http://decorez-renovez.dev', 8)" onmouseout="hide_image('http://decorez-renovez.dev', 8)" alt="Champagne-Ardenne">
+                            <area class="shapefrance" alt="Corse" onmouseout="hide_image('http://static.leboncoin.fr', 9)" onmouseover="change_image('http://static.leboncoin.fr', 9)" data-regionid="10" coords="403,347,374,376,376,396,385,421,400,422,413,381,405,346" title="Corse" shape="poly">
+                            <area class="shapefrance" shape="poly" title="Franche-Comté" coords="339,214,333,220,326,216,319,219,315,212,319,195,313,190,320,173,317,159,322,156,329,155,326,149,334,141,348,141,366,149,366,155,374,170" data-regionid="11" onmouseover="change_image('http://decorez-renovez.dev', 10)" onmouseout="hide_image('http://decorez-renovez.dev', 10)" alt="Franche-Comté">
+                            <area class="shapefrance" shape="poly" title="Haute-Normandie" coords="190,47,190,47,202,59,200,67,202,84,196,88,189,102,178,108,164,102,153,74,148,57" data-regionid="12" onmouseover="change_image('http://decorez-renovez.dev', 11)" onmouseout="hide_image('http://decorez-renovez.dev', 11)" alt="Haute-Normandie">
+                            <area class="shapefrance" shape="poly" title="Ile-de-France" coords="202,86,191,101,197,114,205,120,209,127,223,127,226,134,238,133,242,124,252,123,255,114,253,105,243,92,231,94,216,86" data-regionid="13" onmouseover="change_image('http://decorez-renovez.dev', 12)" onmouseout="hide_image('http://decorez-renovez.dev', 12)" alt="Ile-de-France">
+                            <area class="shapefrance" shape="poly" title="Languedoc-Roussillon" coords="246,400,230,406,197,404,200,393,214,391,213,386,207,384,206,371,198,359,202,354,229,354,231,346,251,337,256,323,248,316,241,296,251,287,270,292,276,311,284,316,296,313,303,327,295,331,294,340,282,351" data-regionid="14" onmouseover="change_image('http://decorez-renovez.dev', 13)" onmouseout="hide_image('http://decorez-renovez.dev', 13)" alt="Languedoc-Roussillon">
+                            <area class="shapefrance" shape="poly" title="Limousin" coords="181,219,171,225,170,229,173,238,166,246,168,251,180,253,182,255,185,273,191,278,211,284,214,265,224,262,222,243,226,239,226,226,215,217,202,217,182,219" data-regionid="15" onmouseover="change_image('http://decorez-renovez.dev', 14)" onmouseout="hide_image('http://decorez-renovez.dev', 14)" alt="Limousin">
+                            <area class="shapefrance" shape="poly" title="Lorraine" coords="322,62,311,68,303,70,305,79,300,83,302,94,299,98,302,110,314,119,316,125,323,127,325,140,330,142,334,140,347,139,359,145,369,124,364,114,370,108,368,100,362,96,360,92,368,86,372,91,380,91,386,82" data-regionid="16" onmouseover="change_image('http://decorez-renovez.dev', 15)" onmouseout="hide_image('http://decorez-renovez.dev', 15)" alt="Lorraine">
+                            <area class="shapefrance" shape="poly" title="Midi-Pyrénées" coords="192,280,181,296,175,299,173,319,142,330,134,328,132,343,142,355,132,370,129,385,197,397,200,391,212,391,212,388,206,385,205,371,197,360,200,352,227,353,229,345,248,336,255,325,247,318,239,297,232,287,225,295,212,300,210,286" data-regionid="17" onmouseover="change_image('http://decorez-renovez.dev', 16)" onmouseout="hide_image('http://decorez-renovez.dev', 16)" alt="Midi-Pyrénées">
+                            <area class="shapefrance" shape="poly" title="Nord-Pas-de-Calais" coords="191,30,199,35,207,36,213,41,224,38,224,43,248,50,263,46,281,50,279,29,231,0,190,2" data-regionid="18" onmouseover="change_image('http://decorez-renovez.dev', 17)" onmouseout="hide_image('http://decorez-renovez.dev', 17)" alt="Nord-Pas-de-Calais">
+                            <area class="shapefrance" shape="poly" title="Pays de la Loire" coords="113,118,115,140,106,147,67,164,67,173,80,205,104,222,111,214,115,219,121,215,125,217,126,214,117,185,130,181,142,183,145,181,148,161,161,156,173,134,169,130,159,130,154,123,144,123,140,118" data-regionid="19" onmouseover="change_image('http://decorez-renovez.dev', 18)" onmouseout="hide_image('http://decorez-renovez.dev', 18)" alt="Pays de la Loire">
+                            <area class="shapefrance" shape="poly" title="Picardie" coords="189,43,204,58,202,65,204,84,216,84,231,93,244,91,253,101,258,96,258,82,271,75,269,65,280,52,264,48,247,53,223,45,222,40,215,42,205,37,193,32" data-regionid="20" onmouseover="change_image('http://decorez-renovez.dev', 19)" onmouseout="hide_image('http://decorez-renovez.dev', 19)" alt="Picardie">
+                            <area class="shapefrance" shape="poly" title="Poitou-Charentes" coords="131,184,119,187,127,214,125,219,114,221,111,217,102,224,101,244,114,258,139,273,172,239,168,227,181,217,173,209,167,194,156,191,147,183,141,186,132,184" data-regionid="21" onmouseover="change_image('http://decorez-renovez.dev', 20)" onmouseout="hide_image('http://decorez-renovez.dev', 20)" alt="Poitou-Charentes">
+                            <area class="shapefrance" shape="poly" title="Provence-Alpes-Côte d'Azur" coords="364,275,350,272,347,275,352,284,343,284,324,303,332,313,328,321,317,318,313,313,299,313,305,328,298,332,295,340,282,354,339,372,377,359,405,325,374,284,366,275" data-regionid="22" onmouseover="change_image('http://decorez-renovez.dev', 21)" onmouseout="hide_image('http://decorez-renovez.dev', 21)" alt="Provence-Alpes-Côte d'Azur">
+                            <area class="shapefrance" shape="poly" title="Rhône-Alpes" coords="362,212,340,214,333,222,325,218,321,221,313,212,304,211,301,225,290,221,289,226,275,231,270,224,267,233,265,242,271,252,273,260,289,265,292,270,272,292,277,309,284,313,301,311,316,311,318,316,327,318,330,314,323,302,343,282,348,282,345,275,350,270,369,273,382,262,378,228,365,212" data-regionid="23" onmouseover="change_image('http://decorez-renovez.dev', 22)" onmouseout="hide_image('http://decorez-renovez.dev', 22)" alt="Rhône-Alpes">
+                            <area class="shapefrance" shape="poly" title="Guadeloupe" coords="71,473,81,463,79,448,88,451,96,446,111,448,101,439,97,431,89,423,83,430,86,435,81,436,80,442,74,440,66,435,60,441,62,449,63,458,70,473,104,466,110,473,106,478,100,476,98,470,104,468,115,442,119,445,126,441,124,437,118,439,73,481,72,476,71,477,80,476,81,481,72,479" data-regionid="24" onmouseover="change_image('http://decorez-renovez.dev', 23)" onmouseout="hide_image('http://decorez-renovez.dev', 23)" alt="Guadeloupe">
+                            <area class="shapefrance" shape="poly" title="Martinique" coords="146,426,143,434,151,440,149,445,162,457,158,466,164,472,168,470,183,473,186,480,192,470,184,452,176,448,181,444,176,441,185,439,184,435,175,438,169,434,165,429,157,426,148,427" data-regionid="25" onmouseover="change_image('http://decorez-renovez.dev', 24)" onmouseout="hide_image('http://decorez-renovez.dev', 24)" alt="Martinique">
+                            <area class="shapefrance" shape="poly" title="Guyane" coords="227,431,234,436,252,442,259,452,252,461,250,471,243,480,239,478,237,477,228,480,220,477,222,472,223,465,228,463,220,454,221,448,219,445,218,442,223,437,227,432" data-regionid="26" onmouseover="change_image('http://decorez-renovez.dev', 25)" onmouseout="hide_image('http://decorez-renovez.dev', 25)" alt="Guyane">
+                            <area class="shapefrance" shape="poly" title="Réunion" coords="298,439,318,440,324,446,325,451,333,461,330,469,332,477,318,480,310,479,300,472,293,473,292,468,285,456,286,451,290,449,291,445,298,441" data-regionid="27" onmouseover="change_image('http://decorez-renovez.dev', 26)" onmouseout="hide_image('http://decorez-renovez.dev', 26)" alt="Réunion">
+                        </map>
+
+                        <div class="canvas_image">
+                            <div style="background-image: url(http://static.leboncoin.fr/img/none.gif); " class="Map" id="area_image">
+                                <img src="http://static.leboncoin.fr/img/transparent.png" alt="" usemap="#france_map">	
+                            </div>
+                        </div>
+
+                        <div id="horizontal-separation-line"></div>
+                    </div>
+                    <div id="content-map-regions">
+                        <a class="linkfrance" id="regionName_1" data-regionid="2" title="Alsace" onmouseover="change_image('http://decorez-renovez.dev', 1);" onmouseout="hide_image('http://decorez-renovez.dev', 1);">Alsace</a><br /> 
+                        <a class="linkfrance" id="regionName_2" data-regionid="3" title="Aquitaine" onmouseover="change_image('http://decorez-renovez.dev', 2);" onmouseout="hide_image('http://decorez-renovez.dev', 2);">Aquitaine</a><br /> 
+                        <a class="linkfrance" id="regionName_3" data-regionid="4" title="Auvergne" onmouseover="change_image('http://decorez-renovez.dev', 3);" onmouseout="hide_image('http://decorez-renovez.dev', 3);">Auvergne</a><br /> 
+                        <a class="linkfrance" id="regionName_4" data-regionid="5" title="Basse-Normandie" onmouseover="change_image('http://decorez-renovez.dev', 4);" onmouseout="hide_image('http://decorez-renovez.dev', 4);">Basse-Normandie</a><br /> 
+                        <a class="linkfrance" id="regionName_5" data-regionid="6" title="Bourgogne" onmouseover="change_image('http://decorez-renovez.dev', 5);" onmouseout="hide_image('http://decorez-renovez.dev', 5);">Bourgogne</a><br /> 
+                        <a class="linkfrance" id="regionName_6" data-regionid="7" title="Bretagne" onmouseover="change_image('http://decorez-renovez.dev', 6);" onmouseout="hide_image('http://decorez-renovez.dev', 6);">Bretagne</a><br /> 
+                        <a class="linkfrance" id="regionName_7" data-regionid="8" title="Centre" onmouseover="change_image('http://decorez-renovez.dev', 7);" onmouseout="hide_image('http://decorez-renovez.dev', 7);">Centre</a><br /> 
+                        <a class="linkfrance" id="regionName_8" data-regionid="9" title="Champagne-Ardenne" onmouseover="change_image('http://decorez-renovez.dev', 8);" onmouseout="hide_image('http://decorez-renovez.dev', 8);">Champagne-Ardenne</a><br /> 
+                        <a class="linkfrance" id="regionName_9" data-regionid="10" title="Corse" onmouseover="change_image('http://decorez-renovez.dev', 9);" onmouseout="hide_image('http://decorez-renovez.dev', 9);">Corse</a><br /> 
+                        <a class="linkfrance" id="regionName_10" data-regionid="11" title="Franche-Comté" onmouseover="change_image('http://decorez-renovez.dev', 10);" onmouseout="hide_image('http://decorez-renovez.dev', 10);">Franche-Comté</a><br /> 
+                        <a class="linkfrance" id="regionName_11" data-regionid="12" title="Haute-Normandie" onmouseover="change_image('http://decorez-renovez.dev', 11);" onmouseout="hide_image('http://decorez-renovez.dev', 11);">Haute-Normandie</a><br /> 
+                        <a class="linkfrance" id="regionName_12" data-regionid="13" title="Ile-de-France" onmouseover="change_image('http://decorez-renovez.dev', 12);" onmouseout="hide_image('http://decorez-renovez.dev', 12);">Ile-de-France</a><br /> 
+                        <a class="linkfrance" id="regionName_13" data-regionid="14" title="Languedoc-Roussillon" onmouseover="change_image('http://decorez-renovez.dev', 13);" onmouseout="hide_image('http://decorez-renovez.dev', 13);">Languedoc-Roussillon</a><br /> 
+                        <a class="linkfrance" id="regionName_14" data-regionid="15" title="Limousin" onmouseover="change_image('http://decorez-renovez.dev', 14);" onmouseout="hide_image('http://decorez-renovez.dev', 14);">Limousin</a><br /> 
+                        <a class="linkfrance" id="regionName_15" data-regionid="16" title="Lorraine" onmouseover="change_image('http://decorez-renovez.dev', 15);" onmouseout="hide_image('http://decorez-renovez.dev', 15);">Lorraine</a><br /> 
+                        <a class="linkfrance" id="regionName_16" data-regionid="17" title="Midi-Pyrénées" onmouseover="change_image('http://decorez-renovez.dev', 16);" onmouseout="hide_image('http://decorez-renovez.dev', 16);">Midi-Pyrénées</a><br /> 
+                        <a class="linkfrance" id="regionName_17" data-regionid="18" title="Nord-Pas-de-Calais" onmouseover="change_image('http://decorez-renovez.dev', 17);" onmouseout="hide_image('http://decorez-renovez.dev', 17);">Nord-Pas-de-Calais</a><br /> 
+                        <a class="linkfrance" id="regionName_18" data-regionid="19" title="Pays de la Loire" onmouseover="change_image('http://decorez-renovez.dev', 18);" onmouseout="hide_image('http://decorez-renovez.dev', 18);">Pays de la Loire</a><br /> 
+                        <a class="linkfrance" id="regionName_19" data-regionid="20" title="Picardie" onmouseover="change_image('http://decorez-renovez.dev', 19);" onmouseout="hide_image('http://decorez-renovez.dev', 19);">Picardie</a><br /> 
+                        <a class="linkfrance" id="regionName_20" data-regionid="21" title="Poitou-Charentes" onmouseover="change_image('http://decorez-renovez.dev', 20);" onmouseout="hide_image('http://decorez-renovez.dev', 20);">Poitou-Charentes</a><br /> 
+                        <a class="linkfrance" id="regionName_21" data-regionid="22" title="Provence-Alpes-Côte d'Azur" onmouseover="change_image('http://decorez-renovez.dev', 21);" onmouseout="hide_image('http://decorez-renovez.dev', 21);">Provence-Alpes-Côte d'Azur</a><br /> 
+                        <a class="linkfrance" id="regionName_22" data-regionid="23" title="Rhône-Alpes" onmouseover="change_image('http://decorez-renovez.dev', 22);" onmouseout="hide_image('http://decorez-renovez.dev', 22);">Rhône-Alpes</a><br /> 
+                        &nbsp;<br /> 
+                        <a class="linkfrance" id="regionName_23" data-regionid="24" title="Guadeloupe" onmouseover="change_image('http://decorez-renovez.dev', 23);" onmouseout="hide_image('http://decorez-renovez.dev', 23);">Guadeloupe</a><br /> 
+                        <a class="linkfrance" id="regionName_24" data-regionid="25" title="Martinique" onmouseover="change_image('http://decorez-renovez.dev', 24);" onmouseout="hide_image('http://decorez-renovez.dev', 24);">Martinique</a><br /> 
+                        <a class="linkfrance" id="regionName_25" data-regionid="26" title="Guyane" onmouseover="change_image('http://decorez-renovez.dev', 25);" onmouseout="hide_image('http://decorez-renovez.dev', 25);">Guyane</a><br /> 
+                        <a class="linkfrance" id="regionName_26" data-regionid="27" title="Réunion" onmouseover="change_image('http://decorez-renovez.dev', 26);" onmouseout="hide_image('http://decorez-renovez.dev', 26);">Réunion</a><br /> 
+                    </div>
+
+                    <div style="clear: both"></div>
+                </div>
+            </div>
+
+            <footer>
+                <div id="footer-content1">
+                    <div id="footer-content1-left"></div>
+                    <div class="footer-content-text">
+                        <div id="footer-content1-right"></div>
+                        <h2>Espace dépose de Chantier (service gratuit)</h2>
+                        <div class="footer-content-text-text">Vous pouvez déposer votre annonce en décrivant le chantier (+photos).<br/>votre budget approximatif et les corps de métier souhaités.</div>
+                        <div class="footer-content-text-text" style="margin-top: 10px;">Les pros vous contacterons.<a href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'createmember')); ?>">votre projet</a></div>
+                    </div>
+
+                    <div style="clear: both;"></div>
+                </div>
+                <div id="footer-content2">
+                    <div id="footer-content2-left"></div>
+                    <div id="footer-content2-right"></div>
+                    
+                    <div id="footer-content2-div">
+                        <div id="connection-box">
+                            <?php if ($this->user == null){ ?>
+                            <h3>Accéder à votre espace PRO</h3>
+                            
+                            <form action="<?php echo $this->url(array('controller' => 'index', 'action' => 'connexion')); ?>" method="post">
+                                <input type="text" placeholder="Identifiant" name="email" />
+                                <input type="password" placeholder="Mot de passe" name="password" />
+                                <input type="submit" placeholder="Mot de passe" value="OK" />
+                            </form>
+                            
+                            <div class="info">
+                                <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'recuperation')); ?>" style="margin-right: 20px;">Mot de pass oublié ou perdu ?</a>
+
+                                <fb:login-button autologoutlink="true" perms="email"></fb:login-button>
+                            </div>
+                            <?php } else { ?>
+                            <div style="margin-top: 5px;margin-left: 10px;line-height: 28px;">Bonjour <?php echo $this->user->getLastname(); ?>,<br/> vous êtes actuellement connecté </div>
+                            <div><a style="color: #4476bb;text-decoration: underline;margin-left: 10px;font-size: 14px;" href="<?php echo $this->url(array('controller' => 'index', 'action' => 'deconnexion')); ?>">Se déconnecter ici</a></div>
+                            <?php } ?>
+                            
+                            
+                            <img id="footer-round-topleft" src="<?php echo $this->baseUrl('images/rond2.png'); ?>" />
+                            <img id="footer-round-topright" src="<?php echo $this->baseUrl('images/rond2.png'); ?>" />
+                            <img id="footer-round-botleft" src="<?php echo $this->baseUrl('images/rond2.png'); ?>" />
+                            <img id="footer-round-botright" src="<?php echo $this->baseUrl('images/rond2.png'); ?>" />
+                        </div>
+                        <div id="footer-content2-links">
+                            <a class="rightseparator" href="<?php echo $this->url(array('controller' => 'index', 'action' => 'infos-legales')); ?>">Infos légales</a>
+                            <a class="rightseparator" href="<?php echo $this->url(array('controller' => 'index', 'action' => 'a-propos')); ?>">Qui sommes nous</a> 
+                            <a class="rightseparator" href="<?php echo $this->url(array('controller' => 'index', 'action' => 'contact')); ?>">Contact</a>
+                            <a class="rightseparator" href="<?php echo $this->url(array('controller' => 'index', 'action' => 'publicite')); ?>">Publicité</a>
+                            <a class="rightseparator" href="<?php echo $this->url(array('controller' => 'index', 'action' => 'cgv')); ?>">CGV</a>
+                            <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'regles-de-diffusion')); ?>">Règles de Diffusion</a>
+                            <a class="rightseparator" href="/article?page=5">Ajouter à mes favoris</a>
+                            <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'partenaire')); ?>">Partenaires</a>
+                        </div>
+                    </div>
+
+                    <div id="footer-content2-shadow"></div>
+
+                    <div style="clear: both;"></div>
+                </div>
+            </footer>
+        </div>
+        
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <div id="fb-root"></div>
+        <script>
+            $(document).ready(function(){
+                $('.shapefrance, .linkfrance').click(function(){
+                    $('#search-region').val($(this).data('regionid'));
+                    $('#regionsearchannonce').submit();
+                });
+                
+                // Additional JS functions here
+                window.fbAsyncInit = function() {
+                    FB.init({
+                        appId      : '316673455129025', // App ID
+                        channelUrl : '//www.decorez-renovez.fr/channel.html', // Channel File
+                        status     : true, // check login status
+                        cookie     : true, // enable cookies to allow the server to access the session
+                        xfbml      : true  // parse XFBML
+                    });
+
+                    // Additional init code here
+
+                    /* All the events registered */
+                    FB.Event.subscribe('auth.login', function(response) {
+                        var firstname = "";
+                        var lastname = "";
+                       // do something with response
+                        FB.api('/me', function(response) {
+                            if(response.name){
+                                firstname = response.name.split(" ")[0];
+                                lastname = response.name.split(" ")[1];
+                            }
+                            console.log(response.id);
+                            $.ajax({
+                                type: "POST",
+                                url: "<?php echo $this->url(array('controller' => 'auth', 'action' => 'facebooklogin')); ?>",
+                                context: document.body,
+                                data: {
+                                    fbid: response.id,
+                                    fname: firstname,
+                                    lname: lastname,
+                                    email: response.email
+                                }
+                            }).done(function() {
+                                document.location.href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'index')); ?>"
+                            });
+                        });
+                    });
+                    FB.Event.subscribe('auth.logout', function(response) {
+                        // do something with response
+                        $.ajax({
+                            type: "POST",
+                            url: "<?php echo $this->url(array('controller' => 'auth', 'action' => 'facebooklogout')); ?>"
+                        }).done(function() {
+                            document.location.href="<?php echo $this->url(array('controller' => 'index', 'action' => 'connexion')); ?>"
+                        });
+                    });
+
+                    <?php if($this->user == null){ ?>
+                    FB.getLoginStatus(function(response) {
+                        if (response.status === 'connected') {
+                            var uid = response.authResponse.userID;
+                            var accessToken = response.authResponse.accessToken;
+                            $.ajax({
+                                type: "POST",
+                                url: "<?php echo $this->url(array('controller' => 'auth', 'action' => 'facebooklogin')); ?>",
+                                context: document.body,
+                                data: {
+                                    fbid: response.authResponse.userID,
+                                    email: response.email
+                                }
+                            }).done(function() {
+                                document.location.href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'index')); ?>"
+                            });
+                        } else if (response.status === 'not_authorized') {
+                            // the user is logged in to Facebook, 
+                            // but has not authenticated your app
+                        } else {
+                            // the user isn't logged in to Facebook.
+                        }
+                    });
+                    <?php } ?>
+                };
+
+                // Load the SDK Asynchronously
+                (function(d){
+                    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+                    if (d.getElementById(id)) {return;}
+                    js = d.createElement('script'); js.id = id; js.async = true;
+                    js.src = "//connect.facebook.net/en_US/all.js";
+                    ref.parentNode.insertBefore(js, ref);
+                }(document));
+            });
+        </script>
+    </body>
+</html>
+

@@ -1,0 +1,108 @@
+<?php
+$link = 'http://'.$_SERVER['HTTP_HOST'].'/';
+?>
+
+<div id="tarifs-content" style="position: relative">
+    <div id="tarifs-content-header">
+        <div class="content-left"></div>
+        <div class="content-right"></div>
+        
+        <img style="position: absolute;left: 300px;top: 50px;" src="<?php echo $this->baseUrl('images/tarifstext.png'); ?>" />
+    </div>
+    <div id="tarifs-content-banner">
+        <div class="content-left"></div>
+        <div class="content-right"></div>
+    </div>
+    
+    <div id="tarifs-core">
+        <div class="border-left"></div>
+        <div class="border-right"></div>
+        
+        <div>
+            <img  style="float: left; margin-top: 10px;margin-left: 100px;" src="<?php echo $this->baseUrl('images/tarifsicons.png'); ?>" />
+            
+            <div style="margin-left: 355px;padding-top: 24px; font-size: 20px;color: #6f6f6f;">au choix voir tableau ci-dessous</div>
+            <div style="margin-left: 355px;margin-top: 37px; font-size: 20px;color: #6f6f6f;">Vos services sont directement disponible</div>
+        </div>
+        
+        <div style="border-top: 2px solid #0479a0; width: 760px; margin: auto;margin-top: 80px;text-align: center;color: #0479a0;padding-top: 15px;">
+            <h1><strong>Choisissez</strong> votre formulre</h1>
+            
+            <table style="float: left; color: #9d9d9d;text-align: left;margin-top: 20px; margin-left: 50px;">
+                <tr>
+                    <td style="border-bottom: 1px solid #9d9d9d;width: 110px;padding: 6px 8px;">Formule</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid #9d9d9d;width: 110px;padding: 6px 8px;">Maxi</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid #9d9d9d;width: 110px;padding: 6px 8px;">Medium</td>
+                </tr>
+                <tr>
+                    <td style="width: 110px;padding: 6px 8px;">Mini</td>
+                </tr>
+            </table>
+            <table style="margin-top: 20px;">
+                <tr>
+                    <th style="background: #8baa00;color: white;padding: 6px;width: 130px;-webkit-border-top-left-radius: 10px;
+-moz-border-radius-topleft: 10px;
+border-top-left-radius: 10px;">Abonnement</th>
+                    <th style="background: #0479a0;color: white;padding: 6px;width: 130px;">Durée</th>
+                    <th style="background: #efc627;color: white;padding: 6px;width: 130px;-webkit-border-top-right-radius: 10px;
+-moz-border-radius-topright: 10px;
+border-top-right-radius: 10px;">Prix total</th>
+                </tr>
+                <tr>
+                    <td style="padding: 6px;">12 €/mois</td>
+                    <td style="padding: 6px;">12 mois</td>
+                    <td style="padding: 6px;">144 €</td>
+                </tr>
+                <tr>
+                    <td style="padding: 6px;">14,99€/mois</td>
+                    <td style="padding: 6px;">6 mois</td>
+                    <td style="padding: 6px;">89,94 €</td>
+                </tr>
+                <tr>
+                    <td style="padding: 6px;">19,99€/mois</td>
+                    <td style="padding: 6px;">3 mois</td>
+                    <td style="padding: 6px;">59,70 €</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: left;">
+                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+
+                            <select name="amount">
+                                <option value="144.00">12 mois</option>
+                                <option value="89.94">6 mois</option>
+                                <option value="59.70">3 mois</option>
+                            </select>
+
+                            <input name="currency_code" type="hidden" value="EUR" />
+                            <input name="shipping" type="hidden" value="0.00" />
+                            <input name="tax" type="hidden" value="0.00" />
+                            <input name="return" type="hidden" value="<?php echo $link; ?>membre/index" />
+                            <input name="cancel_return" type="hidden" value="<?php echo $link; ?>feature/suscribepro" />
+                            <input name="notify_url" type="hidden" value="<?php echo $link; ?>feature/makepro" />
+                            <input name="cmd" type="hidden" value="_xclick" />
+                            <input name="business" type="hidden" value="paiement@decorezrenovez.fr" />
+                            <input name="item_name" type="hidden" value="Abonnement artisant" />
+                            <input name="no_note" type="hidden" value="1" />
+                            <input name="lc" type="hidden" value="FR" />
+                            <input name="bn" type="hidden" value="PP-BuyNowBF" />
+                            <input name="custom" type="hidden" value="user_id=<?php echo $this->member->getId(); ?>" />
+                            <input style="position: relative;top: 8px;margin-left: 10px;" alt="Effectuez vos paiements via PayPal : une solution rapide, gratuite et sécurisée" name="submit" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_buynow_LG.gif" type="image" /><img src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" border="0" alt="" width="1" height="1" />
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        
+
+        
+    </div>
+    <div id="tarifs-content-bot">
+        <div class="content-left"></div>
+        <div class="content-right"></div>
+    </div>
+</div>

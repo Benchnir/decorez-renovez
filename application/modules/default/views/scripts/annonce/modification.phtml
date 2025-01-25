@@ -1,0 +1,32 @@
+<?php
+$prod = true;
+$link = 'http://'.$_SERVER['HTTP_HOST'].(($prod)?'/decorez/public/':'/');
+?>
+<h1>Modifier mon annonce</h1>
+
+<?php
+if (is_array($this->formMessages) && !empty($this->formMessages)) {
+    echo $this->partial('_partials/messenger.phtml', array('data' => $this->formMessages));
+}
+?>
+<div class="box inner">
+    <form method="POST" enctype="multipart/form-data" action="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'modification')); ?>">
+    <?php echo $this->form->description; ?>
+    <?php echo $this->form->department; ?>
+    <?php echo $this->form->budget; ?>
+    <?php echo $this->form->duration; ?>
+    <div id="creation-annonce-jobs">
+        <?php echo $this->form->jobs; ?>
+    </div>
+    <?php for($i=0; $i<10; $i++) { ?>
+        <?php if($this->annonce->getIsImage() || $i < 4){ ?>
+            <?php if(isset($this->pictures[$i])){ ?>
+                    <?php echo $this->getPicture($this->pictures[$i]->getPath()); ?>
+            <?php } ?>
+            <?php echo $this->form->getElement('avatar'.($i+1)); ?>
+        <?php } ?>
+    <?php } ?>
+    <?php echo $this->form->visibility; ?>
+    <?php echo $this->form->modifier; ?>
+    </form>
+</div>

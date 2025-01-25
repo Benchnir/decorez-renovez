@@ -1,0 +1,7 @@
+<h2>Modification de votre offre</h2>
+<form method="POST" action="<?php echo $this->url(array('controller' => 'offer', 'action' => 'edit', 'id' => $this->offer->getId())); ?>">
+    <input type="hidden" name="id" value="<?php echo $this->offer->getId(); ?>"
+    <?php echo $this->addOfferForm->getElement('price'); ?>
+    <?php echo $this->addOfferForm->getElement('description'); ?>
+    <?php echo $this->addOfferForm->getElement('submit'); ?>
+</form>

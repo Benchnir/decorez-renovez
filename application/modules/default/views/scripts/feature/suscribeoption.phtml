@@ -1,0 +1,96 @@
+<?php
+$link = 'http://'.$_SERVER['HTTP_HOST'].'/';
+?>
+
+<div class="pictinfo-whithouttext">
+    <img src="<?php echo $this->baseUrl('images/flecheexplication.png'); ?>" width="23" height="24" />	
+    <h1>Démarquez vous !</h1>
+</div>
+
+<div class="box">
+    <div class="feature-option-field">
+        <div class="feature-option-rightimage"><img src="<?php echo $this->baseURL('images/option_profil_img1.jpg'); ?>" /></div>
+        
+        <div class="feature-option-field-head"><input type="checkbox" checked="checked"/>Remontez mon profil en tête de liste <span class="greenbutton">Nouveau !</span></div>
+        <div class="feature-option-field-info">repositionnez automatiquement votre profil en première page des listes de résultats</div>
+        
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="width: 560px;">
+            <div style="float: right; margin-top: 20px;">
+                <input alt="Effectuez vos paiements via PayPal : une solution rapide, gratuite et sécurisée" name="submit" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_buynow_LG.gif" type="image" /><img src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" border="0" alt="" width="1" height="1" />
+            </div>
+            <div><label><input type="radio" name="amount" value="12.00" checked="checked">Chaque jour pendant 7 jours <strong>(12&euro; TTC)</strong></label></div>
+            <div><label><input type="radio" name="amount" value="24.00">Chaque semaine pendant 3 mois <strong>(24&euro; TTC)</strong></label></div>
+
+            <input name="currency_code" type="hidden" value="EUR" />
+            <input name="shipping" type="hidden" value="0.00" />
+            <input name="tax" type="hidden" value="0.00" />
+            <input name="return" type="hidden" value="<?php echo $link; ?>feature/suscribeoption" />
+            <input name="cancel_return" type="hidden" value="<?php echo $link; ?>feature/suscribeoption" />
+            <input name="notify_url" type="hidden" value="<?php echo $link; ?>feature/maketoplist" />
+            <input name="cmd" type="hidden" value="_xclick" />
+            <input name="business" type="hidden" value="paiement@decorezrenovez.fr" />
+            <input name="item_name" type="hidden" value="Option Toplist pour Artisant" />
+            <input name="no_note" type="hidden" value="1" />
+            <input name="lc" type="hidden" value="FR" />
+            <input name="bn" type="hidden" value="PP-BuyNowBF" />
+            <input name="custom" type="hidden" value="user_id=<?php echo $this->member->getId(); ?>" />
+        </form>
+        <div class="feature-option-info">
+            <?php if($this->member->getFeature()->isTopList()){ ?>
+            Votre profil sera mis en avant jusqu'au <?php echo $this->member->getFeature()->getTopListExpire()->format('d/m/Y'); ?>
+            <?php } else { ?>
+                Votre profil n'est pas encore mis en avant
+            <?php } ?>
+        </div>
+    </div>
+    
+    
+    <div class="feature-option-field">
+        <div class="feature-option-field-head"><input type="checkbox" checked="checked"/>Ajouter un logo "partenaire décorez rénovez" pour vous differencier</div>
+        <div class="feature-option-field-info">votre profil sera en moyenne 7 fois plus consulté</div>
+
+        <div class="feature-option-rightimage"><img src="<?php echo $this->baseURL('images/option_profil_img2.jpg'); ?>" /></div>
+        
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="width: 560px;">
+            <div style="float: right; margin-top: 20px;">
+                <input alt="Effectuez vos paiements via PayPal : une solution rapide, gratuite et sécurisée" name="submit" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_buynow_LG.gif" type="image" /><img src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" border="0" alt="" width="1" height="1" />
+            </div>
+            <div><label><input type="radio" name="amount" value="2.00" checked="checked">pendant 1 mois <strong>(2&euro; TTC)</strong></label></div>
+            <div><label><input type="radio" name="amount" value="10.00">pendant 6 mois <strong>(10&euro; TTC)</strong></label></div>
+            <div><label><input type="radio" name="amount" value="14.00">pendant 1 ans <strong>(14&euro; TTC)</strong> <span style="font-size: 11px; color: red">10&euro; d'économie</span></label></div>
+
+            <input name="currency_code" type="hidden" value="EUR" />
+            <input name="shipping" type="hidden" value="0.00" />
+            <input name="tax" type="hidden" value="0.00" />
+            <input name="return" type="hidden" value="<?php echo $link; ?>feature/suscribeoption" />
+            <input name="cancel_return" type="hidden" value="<?php echo $link; ?>feature/suscribeoption" />
+            <input name="notify_url" type="hidden" value="<?php echo $link; ?>feature/makepartner" />
+            <input name="cmd" type="hidden" value="_xclick" />
+            <input name="business" type="hidden" value="paiement@decorezrenovez.fr" />
+            <input name="item_name" type="hidden" value="Option Partenaire pour Artisant" />
+            <input name="no_note" type="hidden" value="1" />
+            <input name="lc" type="hidden" value="FR" />
+            <input name="bn" type="hidden" value="PP-BuyNowBF" />
+            <input name="custom" type="hidden" value="user_id=<?php echo $this->member->getId(); ?>" />
+        </form>
+        
+        <div class="feature-option-info">
+            <?php if($this->member->getFeature()->isPartner()){ ?>
+                Vous ête partenaire décorez rénovez jusqu'au <?php echo $this->member->getFeature()->getPartnerExpire()->format('d/m/Y'); ?>
+            <?php } else { ?>
+                Vous n'ête pas encore partenaire décorez rénovez
+            <?php } ?>
+        </div>
+        <div style="clear: right"></div>
+    </div>
+    
+    <div class="feature-option-field-bottom">
+        En validant la diffusion de mon annonce, j'accepte les règles de diffusion et d'utilisation du site
+        decorez-renovez.fr et j'autorise decorez-renovez.fr à diffuser mon annonce.
+    </div>
+</div>
+
+
+<div style="margin-left: 356px;margin-top: 20px;">
+    <a class="button_orange" style="margin-right: 20px;" href="<?php echo $this->url(array('controller' => 'membre', 'action' => 'index')); ?>">&lt; Retour</a>
+</div>

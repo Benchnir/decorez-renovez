@@ -1,0 +1,2 @@
+[11-May-2013 01:30:18 Europe/Berlin] PHP Fatal error:  Using $this when not in object context in /home/decorezr/public_html/application/layouts/admin.phtml on line 1
+[11-May-2013 01:32:26 Europe/Berlin] PHP Fatal error:  Using $this when not in object context in /home/decorezr/public_html/application/layouts/admin.phtml on line 1

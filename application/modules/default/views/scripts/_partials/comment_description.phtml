@@ -1,0 +1,21 @@
+<div class="clear">
+    <div class="left inner" style="width:55px;">										
+        <div>
+            <?php echo $this->getAvatar($this->comment->getMember()->getAvatar()); ?>
+            <h4><?php echo $this->comment->getMember()->getSplitName(); ?></h4>
+        </div>
+    </div>
+    <div class="left post inner">
+        <?php if ($this->comment->getType() == My_Controller_Action::COMMENT_TYPE_NEGATIVE): ?>
+            <img src="/decorez/public/images/avisnegatif.gif" alt="avis negatif" />
+        <?php elseif ($this->comment->getType() == My_Controller_Action::COMMENT_TYPE_NEUTRAL): ?>
+            <img src="/decorez/public/images/avisnegatif.gif" alt="avis negatif" />
+        <?php elseif ($this->comment->getType() == My_Controller_Action::COMMENT_TYPE_POSITIVE): ?>
+            <img src="/decorez/public/images/avisnegatif.gif" alt="avis negatif" />
+        <?php endif; ?>
+        <p><?php echo nl2br($this->comment->getMessage()); ?></p>
+    </div>
+    <div class="inner">
+        <h2 class="date"><?php echo $this->comment->getCreatedAt()->format('d/m/Y'); ?></h2>
+    </div>
+</div>

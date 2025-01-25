@@ -1,0 +1,224 @@
+<?php
+if (is_array($this->formMessages) && !empty($this->formMessages)) {
+    echo $this->partial('_partials/messenger.phtml', array('data' => $this->formMessages));
+}
+?>
+<div class="headinfo">
+    Déposer votre profile sur decorez-renovez.fr  est gratuit et très simple. 
+    Votre annonce sera validé par notre équipe éditorial avant d'être mis en ligne.
+    Voir les règles de diffusion.
+</div>
+
+<div class="pictinfo">
+    <img src="<?php echo $this->baseUrl('images/flecheexplication.png'); ?>" width="23" height="24" />
+    <h1>Remplissez votre profil ansi donnez envie aux clients de vous appeler</h1>
+    <div class="text">info : 1 profil avec photo est 7 fois plus consulté qu'un profil sans photo</div>
+</div>
+
+<div style="text-align: right">
+    <a href="<?php echo $this->url(array('controller' => 'feature', 'action' => 'suscribeoption')); ?>">Gerer mes options</a>
+</div>
+
+<div style="position: relative;">
+    <form method="POST" enctype="multipart/form-data" action="<?php echo $this->url(array('controller' => 'membre', 'action' => 'edit')); ?>">
+        <div class="box" style="float: right; width: 350px">
+            <?php echo $this->memberForm->experience; ?>
+            <?php echo $this->memberForm->serviceDescription; ?>
+        </div>
+
+        <div class="box" style="width: 430px;">
+            <table>
+                <tr>
+                    <td class="label green"><?php echo $this->memberForm->mainJob->renderLabel(); ?></td>
+                    <td><?php echo $this->memberForm->mainJob->renderViewHelper(); ?></td>
+                </tr>
+                <tr>
+                    <td class="label"><?php echo $this->memberForm->lastname->renderLabel(); ?></td>
+                    <td><?php echo $this->memberForm->lastname->renderViewHelper(); ?></td>
+                </tr>
+                <tr>
+                    <td class="label"><?php echo $this->memberForm->firstname->renderLabel(); ?></td>
+                    <td><?php echo $this->memberForm->firstname->renderViewHelper(); ?></td>
+                </tr>
+                <tr>
+                    <td class="label"><?php echo $this->memberForm->phone->renderLabel(); ?></td>
+                    <td><?php echo $this->memberForm->phone->renderViewHelper(); ?></td>
+                </tr>
+
+                <tr>
+                    <td class="label"><?php echo $this->memberForm->avatar1->renderLabel(); ?></td>
+                    <td>
+                        <?php if(isset($this->avatars[0])){ ?>
+                            <div style="float: right"><a href="<?php echo $this->url(array('controller' => 'membre', 'action' => 'removeavatar', 'id' => $this->avatars[0]->getId())); ?>">X</a></div>
+                            <?php echo $this->getAvatar($this->avatars[0]->getPath()); ?>
+                        <?php } ?>
+                        <input type="file" name="avatar1" id="avatar1">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label"><?php echo $this->memberForm->avatar2->renderLabel(); ?></td>
+                    <td>
+                        <?php if(isset($this->avatars[1])){ ?>
+                            <div style="float: right"><a href="<?php echo $this->url(array('controller' => 'membre', 'action' => 'removeavatar', 'id' => $this->avatars[1]->getId())); ?>">X</a></div>
+                            <?php echo $this->getAvatar($this->avatars[1]->getPath()); ?>
+                        <?php } ?>
+                        <input type="file" name="avatar2" id="avatar2">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label"><?php echo $this->memberForm->avatar3->renderLabel(); ?></td>
+                    <td>
+                        <?php if(isset($this->avatars[2])){ ?>
+                            <div style="float: right"><a href="<?php echo $this->url(array('controller' => 'membre', 'action' => 'removeavatar', 'id' => $this->avatars[2]->getId())); ?>">X</a></div>
+                            <?php echo $this->getAvatar($this->avatars[2]->getPath()); ?>
+                        <?php } ?>
+                        <input type="file" name="avatar3" id="avatar3">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label"><?php echo $this->memberForm->fax->renderLabel(); ?></td>
+                    <td><?php echo $this->memberForm->fax->renderViewHelper(); ?></td>
+                </tr>
+                <tr>
+                    <td class="label"><?php echo $this->memberForm->siretOrSiren->renderLabel(); ?></td>
+                    <td><?php echo $this->memberForm->siretOrSiren->renderViewHelper(); ?></td>
+                </tr>
+                <tr>
+                    <td class="label"><?php echo $this->memberForm->company->renderLabel(); ?></td>
+                    <td><?php echo $this->memberForm->company->renderViewHelper(); ?></td>
+                </tr>
+            </table>
+        </div>
+        <div id="edit-user-submit-div">
+            <input type="submit" />
+        </div>
+    </form>
+</div>
+<div class="pictinfo">
+    <img src="<?php echo $this->baseUrl('images/flecheexplication.png'); ?>" width="23" height="24" />	
+
+    <h1>Remplissez vos autres domaines d’activités, vos prix indicatifs et donnez vous une note</h1>
+    <div class="text">info : mettez plus d’étoiles dans l’activité où vous voulez travailler d’avantage</div>
+</div>
+
+<div class="headinfo">
+    Ne mettez pas 5 étoiles sur toutes les activités, vous perdrez en crédibilité et votre profil 
+    risque d’être refusé par notre modérateur.
+</div>
+
+<div id="servicejobcontainer">
+    <?php foreach ($this->member->getService()->getJobs()->getValues() as $serviceJob) { ?>
+        <div class="servicejobdiv">
+            <div class="rightdelete">
+                <a href="<?php echo $this->url(array('controller' => 'service', 'action' => 'deletejob', 'id' => $serviceJob->getId())); ?>">
+                    <img width="32" src="<?php echo $this->baseUrl('images/removeButton.png'); ?>" />
+                </a>
+            </div>
+
+            <form id="form-<?php echo $serviceJob->getId(); ?>" method="POST" action="<?php echo $this->url(array('controller' => 'service', 'action' => 'updatejob')); ?>">
+                <input type="hidden" name="id" value="<?php echo $serviceJob->getId(); ?>" />
+                <div style="text-align: center">
+                    <label for="job" class="required">Mes prix pour : </label>
+                    <?php echo $this->serviceJobForms[$serviceJob->getId()]->job->renderViewHelper(); ?>
+                    <input type="hidden" id="evaluation-<?php echo $serviceJob->getId(); ?>" name="evaluation" value="<?php echo $serviceJob->getEvaluation(); ?>" />
+                    ma note: 
+                    <div style="display: inline;position: relative;top: 2px;" id="star-<?php echo $serviceJob->getId(); ?>"></div>
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                            $('#star-<?php echo $serviceJob->getId(); ?>').raty({
+                                starOff: '<?php echo $this->baseUrl('images/star-off.png'); ?>',
+                                starOn: '<?php echo $this->baseUrl('images/star-on.png'); ?>',
+                                score: <?php echo $serviceJob->getEvaluation(); ?>,
+                                click: function(score, evt) {
+                                    $("#evaluation-<?php echo $serviceJob->getId(); ?>").val(score);
+                                }
+                            });
+                            $('#submit-<?php echo $serviceJob->getId(); ?>').click(function(){
+                                $('#prix2-<?php echo $serviceJob->getId(); ?>').removeClass('red');
+                                $('#prix10-<?php echo $serviceJob->getId(); ?>').removeClass('red');
+                                $('#prix30-<?php echo $serviceJob->getId(); ?>').removeClass('red');
+                                if($('#prix2-<?php echo $serviceJob->getId(); ?>').val() > 10){
+                                    if($('#prix2-<?php echo $serviceJob->getId(); ?>').val() > (parseInt($('#prix10-<?php echo $serviceJob->getId(); ?>').val())+5)){
+                                        if($('#prix10-<?php echo $serviceJob->getId(); ?>').val() > (parseInt($('#prix30-<?php echo $serviceJob->getId(); ?>').val())+5)){
+                                            $('#form-<?php echo $serviceJob->getId(); ?>').submit();
+                                        } else {
+                                            $('#prix30-<?php echo $serviceJob->getId(); ?>').addClass('red');
+                                        }
+                                    } else {
+                                        $('#prix10-<?php echo $serviceJob->getId(); ?>').addClass('red');
+                                    }
+                                } else {
+                                    $('#prix2-<?php echo $serviceJob->getId(); ?>').addClass('red');
+                                }
+                            });
+                        });
+                    </script>
+                </div>
+                <div style="margin-top: 35px;">
+                    <input style="margin-left: 261px;" class="textprix" type="text" name="prix2" id="prix2-<?php echo $serviceJob->getId(); ?>" value="<?php echo $this->serviceJobForms[$serviceJob->getId()]->prix2->getValue(); ?>"><span style="font-size: 24px;font-weight: bold;position: relative;top: 4px;left: -6px;">&euro;</span>
+                    <input style="margin-left: 46px;" class="textprix" type="text" name="prix10" id="prix10-<?php echo $serviceJob->getId(); ?>" value="<?php echo $this->serviceJobForms[$serviceJob->getId()]->prix10->getValue(); ?>"><span style="font-size: 24px;font-weight: bold;position: relative;top: 4px;left: -6px;">&euro;</span>
+                    <input style="margin-left: 46px;" class="textprix" type="text" name="prix30" id="prix30-<?php echo $serviceJob->getId(); ?>" value="<?php echo $this->serviceJobForms[$serviceJob->getId()]->prix30->getValue(); ?>"><span style="font-size: 24px;font-weight: bold;position: relative;top: 4px;left: -6px;">&euro;</span>
+                </div>
+                <div style="margin-top: 56px;font-size: 12px;">
+                    <div style="float: left; margin-left: 235px;text-align: center;width: 100px;">
+                        de 1 à 2 j<br/>
+                        <span style="color: red">
+                            soit pour<br/> 
+                            2 jours <span id="pricesum1"><?php echo $serviceJob->getPrice1()*14; ?></span> &euro;
+                        </span>
+                    </div>
+                    <div style="float: left; margin-left: 16px;text-align: center;width: 100px;">
+                        de 2 à 10 j<br/>
+                        <span style="color: red">
+                            soit pour<br/> 
+                            10 jours <span id="pricesum2"><?php echo $serviceJob->getPrice2()*70; ?></span> &euro;
+                        </span>
+                    </div>
+                    <div style="float: left; margin-left: 16px;text-align: center;width: 100px;">
+                        de 10 à 30 j<br/>
+                        <span style="color: red">
+                            soit pour<br/> 
+                            30 jours <span id="pricesum3"><?php echo $serviceJob->getPrice3()*210; ?></span> &euro;
+                        </span>
+                    </div>
+                </div>
+                <div id="edit-servicejob-submit-div">
+                    <input id="submit-<?php echo $serviceJob->getId(); ?>" type="button" value="modifier"/>
+                </div>
+            </form>
+        </div>
+    <?php } ?>
+    
+    <a href="<?php echo $this->url(array('controller' => 'service', 'action' => 'addjob')); ?>">Ajouter une compétence</a>
+</div>
+
+<script type="text/javascript" src="<?php echo $this->baseUrl('js/jquery.raty.min.js');?>"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $('#job').change(function(){
+            if($(this).val() == 'new'){
+                window.location = "<?php echo $this->url(array('controller' => 'service', 'action' => 'newjob')); ?>"
+            }
+        });
+        $('#prix2').keyup(function(){
+            var val = parseInt($(this).val());
+            if(typeof val === "number" && val != ''){
+                $('#pricesum1').text(val*14);
+            }
+        });
+        $('#prix10').keyup(function(){
+            var val = parseInt($(this).val());
+            if(typeof val === "number" && val != ''){
+                $('#pricesum2').text(val*70);
+            }
+        });
+        $('#prix30').keyup(function(){
+            var val = parseInt($(this).val());
+            if(typeof val === "number" && val != ''){
+                $('#pricesum3').text(val*210);
+            }
+        });
+    });
+</script>

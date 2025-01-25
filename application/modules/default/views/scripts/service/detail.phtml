@@ -1,0 +1,220 @@
+<div id="searchdiv">
+    <form method="post" action="<?php echo $this->url(array('controller' => 'service', 'action' => 'index')); ?>">
+        <div class="column">
+            <?php echo $this->form->getElement('job'); ?>
+            <?php echo $this->form->getElement('name'); ?>
+        </div>
+        <div class="column">
+            <?php echo $this->form->getElement('budget'); ?>
+            <?php echo $this->form->getElement('region'); ?>
+        </div>
+        <input class="submitbutton" type="submit" name="submit" id="submitbutton" value="Rechercher">
+    </form>
+
+    <div id="pub">
+        <div style="margin-right: 5px;text-align: right; color: #f2bb33;">publicité <img src="<?php echo $this->baseUrl('images/carre.gif'); ?>" width="6" height="7" style="position: relative;top: -3px;" alt="publicité partenaires travaux"/></div>
+        <?php echo $this->partial('_partials/pubs/728x90_1.phtml'); ?>
+    </div>
+    
+    <div class="pancarte">
+        <a href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'creation')); ?>"><img src="<?php echo $this->baseUrl('images/deposer_mon_annonce.png'); ?>" alt="deposer annonce chantier travaux"></a>
+    </div>
+    
+    <img id="search-topleft" src="<?php echo $this->baseUrl('images/rond2.png'); ?>" width="6" height="7">
+    <img id="search-topright" src="<?php echo $this->baseUrl('images/rond2.png'); ?>" width="6" height="7">					
+    <img id="search-botleft" src="<?php echo $this->baseUrl('images/rond2.png'); ?>" width="6" height="7">
+    <img id="search-botright" src="<?php echo $this->baseUrl('images/rond2.png'); ?>" width="6" height="7">
+</div>
+
+
+<div style="float: right; width: 300px;margin-right: 10px; margin-top: 20px;margin-bottom: 20px;">
+    <div class="box box-profil" style="margin-bottom: 20px;">
+        <div class="avatar">
+            <?php 
+                $avatars = $this->service->getMember()->getAvatars();
+                if($avatars != null && $avatars->count() > 0){
+                    echo $this->getAvatar($avatars->get(0)->getPath()); 
+                } else {
+                    echo '<img src="'.$this->baseUrl('images/avatarpro.jpg').'" width="125" />';
+                }
+            ?>
+        </div>
+        <div class="mainJob">Spécialité: <?php echo $this->service->getMainJobName(); ?></div>
+        <div class="name"><?php echo $this->service->getMember()->getSplitName(); ?></div>
+        <div class="notation"><?php echo $this->getStarsByNotation($this->commentsInfos['note']); ?></div>
+        <div class="experience">Expérience: <?php echo $this->service->getExperience(); ?> ans</div>
+        <div class="phone">Tél : <span style="color: #82baea;"><?php echo $this->service->getMember()->getPhone(); ?></span></div>
+        <div class="mail"><a class="button_orange" href="mailto:<?php echo $this->service->getMember()->getEmail(); ?>">Envoyer un mail</a></div>
+
+        <div class="avis">
+            <div class="positive" style="color: #8eb533;" onClick="filterComments(<?php echo $this->escape($this->service->getId()); ?>, <?php echo My_Controller_Action::COMMENT_TYPE_POSITIVE; ?>);"><span style="font-size: 20px;"><?php echo $this->commentsInfos['pos']; ?></span><br/> avis positifs</div>
+            <div class="neutre" style="color: #f5bb31; "onClick="filterComments(<?php echo $this->escape($this->service->getId()); ?>, <?php echo My_Controller_Action::COMMENT_TYPE_NEUTRAL; ?>);"><span style="font-size: 20px;"><?php echo $this->commentsInfos['neu']; ?></span><br/> avis moyens</div>
+            <div class="negative" style="color: #de5918;" onClick="filterComments(<?php echo $this->escape($this->service->getId()); ?>, <?php echo My_Controller_Action::COMMENT_TYPE_NEGATIVE; ?>);"><span style="font-size: 20px;"><?php echo $this->commentsInfos['neg']; ?></span><br/> avis négatifs</div>
+        </div>
+    </div>
+
+    <div class="box box-profil">
+        <div class="title">Mes particularités :</div>
+        <div class="description"><?php echo $this->service->getDescription(); ?></div>
+        <div class="social">
+            <div class="icon" id="shareButton"><img src="<?php echo $this->baseUrl('images/fb-link-icon.png'); ?>" /><br/>partager ce profil</div>
+        </div>
+    </div>
+</div>
+
+<div class="box box-profil" style="width: 492px;float: right;margin-top: 20px;margin-right: 20px;">
+    <div style="margin-bottom: 20px;">
+        <span class="title">Je travaille surtout :</span>
+        <span class="info-green">(cliquez sur le métier pour connaitre le tarif)</span>
+    </div>
+    
+    <div style="min-height: 100px;border-bottom: 2px dotted #bdbeba;">
+        <div style="float: right; text-align: center; margin-right: 58px;">
+            <div class="bulleinfoorangetext">Sur Décorez-Renovez.fr</div>
+            <div class="bulleinfoorange">
+                <div style="font-size: 26px;"><?php echo $this->commentsInfos['total']; ?></div><div style="margin-top: -3px;">avis</div>
+            </div>
+        </div>
+        <div class="servicejobsdiv">
+            <table>
+            <?php foreach ($this->service->getJobs() as $serviceJob){ ?>
+                <tr class="<?php if ($serviceJob->getId() == $this->job->getId()) echo 'jobSelected'; ?>">
+                    <td style="min-width: 90px; padding: 0px 0px 0px 0px;">
+                        <a href="<?php echo $this->url(array('controller' => 'service', 'action' => 'detail', 'id' => $this->service->getId(), 'metier' => $serviceJob->getId())); ?>">
+                            <?php echo $serviceJob->getJob()->getName(); ?>
+                        </a>
+                    </td>
+                    <td style="padding: 0px 0px 0px 0px;">
+                        <?php echo $this->getStarsByEvaluation($serviceJob->getEvaluation()); ?>
+                        <?php if ($serviceJob->getId() == $this->job->getId()) echo '<span class="jobSelectedclass">(sélectioné)</span>'; ?>
+                    </td>
+                </tr>
+            <?php } ?>
+            </table>
+        </div>
+    </div>
+    
+    <div class="servicejobdiv">
+        <div>
+            <span class="servicejobtitle">Mes prix :</span>
+            <span class="servicejobjob"><?php echo $this->job->getJob()->getName(); ?></span>
+        </div>
+        <div style="margin-top: 36px;text-align: center; font-size: 11px;">
+            <div style="float: left; width: 66px; margin-left: 81px; color: #0da6ff">
+                <span style="font-size: 22px;font-weight: bold"><?php echo $this->job->getPrice1(); ?> &euro;</span><br/>de l'heure
+            </div>
+            <div style="float: left; width: 66px; margin-left: 53px; color: #91b500">
+                <span style="font-size: 22px;font-weight: bold"><?php echo $this->job->getPrice2(); ?> &euro;</span><br/>de l'heure
+            </div>
+            <div style="float: left; width: 66px; margin-left: 53px; color: #f4bd00">
+                <span style="font-size: 22px;font-weight: bold"><?php echo $this->job->getPrice3(); ?> &euro;</span><br/>de l'heure
+            </div>
+        </div>
+        <div style="margin-top: 123px;font-size: 12px;">
+            <div style="float: left; margin-left: 61px;text-align: center;width: 100px;color: #4476bb">
+                de 1 à 2 j<br/>
+                <span style="color: red">
+                    soit pour<br/> 
+                    2 jours <?php echo $this->job->getPrice1()*14; ?> &euro;
+                </span>
+            </div>
+            <div style="float: left; margin-left: 17px;text-align: center;width: 100px;color: #4476bb">
+                de 3 à 10 j<br/>
+                <span style="color: red">
+                    soit pour<br/> 
+                    10 jours <?php echo $this->job->getPrice2()*70; ?> &euro;
+                </span>
+            </div>
+            <div style="float: left; margin-left: 17px;text-align: center;width: 100px;color: #4476bb">
+                de 11 à 30 j<br/>
+                <span style="color: red">
+                    soit pour<br/> 
+                    30 jours <?php echo $this->job->getPrice3()*210; ?> &euro;
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="clear: right;"></div>
+
+
+
+
+<div class="box box-profil" style="margin-top: 20px; margin-left: 10px; margin-right: 10px;min-height: 66px">
+    <div style="float: left;margin-top: 10px;margin-left: 20px;">
+        <h1>Témoignages</h1>
+        <div class="etoilesjaunes">
+            <?php echo $this->getStarsByNotation($this->commentsInfos['note']); ?>
+        </div>
+    </div>
+
+    <div style="float: left;margin-left: 40px;">
+        <div class="bigbulle">
+            <h1><?php echo $this->commentsInfos['total']; ?></h1>
+            <div><h2>avis</h2></div>
+        </div>
+    </div>
+
+    
+    <div class="avis" style="margin-left: 342px;margin-top: 6px;">
+        <div class="positive" style="color: #8eb533;" onClick="filterComments(<?php echo $this->escape($this->service->getId()); ?>, <?php echo My_Controller_Action::COMMENT_TYPE_POSITIVE; ?>);"><span style="font-size: 20px;"><?php echo $this->commentsInfos['pos']; ?></span><br/> avis positifs</div>
+        <div class="neutre" style="color: #f5bb31; "onClick="filterComments(<?php echo $this->escape($this->service->getId()); ?>, <?php echo My_Controller_Action::COMMENT_TYPE_NEUTRAL; ?>);"><span style="font-size: 20px;"><?php echo $this->commentsInfos['neu']; ?></span><br/> avis moyens</div>
+        <div class="negative" style="color: #de5918;" onClick="filterComments(<?php echo $this->escape($this->service->getId()); ?>, <?php echo My_Controller_Action::COMMENT_TYPE_NEGATIVE; ?>);"><span style="font-size: 20px;"><?php echo $this->commentsInfos['neg']; ?></span><br/> avis négatifs</div>
+    </div>
+
+    <div style="float: left; position: relative;left: 30px;top: -20px;color: #4476bb;font-weight: bold;text-decoration: underline;font-size: 11px;">
+        <span class="icon" id="postAvisButton">
+            <img style="display:block; position: absolute; top: 0px; left: 0px" src="<?php echo $this->baseUrl('images/ajoutercommentaire.png'); ?>" />
+            <span style="display: block; position: absolute;top: 0px; left: 30px">donner<br/> un avis</span>
+        </span>
+        <span class="icon" id="report-service">
+            <img style="display:block; position: absolute; top: 0px; left: 85px" src="<?php echo $this->baseUrl('images/contenuabusif.png'); ?>" />
+            <span style="display: block; position: absolute;top: 0px; left: 115px">contenu<br/> abusif</span>
+        </span>
+    </div>
+
+    <div id="comments" style="margin-top: 50px;">
+        <?php echo $this->partial('_partials/comments.phtml', array('comments' => $this->comments, 'service' => $this->service)); ?>
+    </div>
+
+    <?php if ($this->user != null): ?>
+        <div id="postAvisDiv" class="post inner">
+            <?php echo $this->formComment; ?>
+        </div>
+    <?php endif; ?>
+</div>
+
+<?php echo $this->partial('_partials/report_service.phtml', array('author' => ($this->user != null)? $this->user->getId():'', 'service' => $this->service->getId())); ?>
+
+<script>
+    $(document).ready(function(){
+        $('#postAvisDiv').hide();
+        $('#postAvisButton').click(function(){
+            <?php if ($this->user != null): ?>
+            $('#postAvisDiv').show();
+            $('html, body').animate({scrollTop:$(document).height()}, 'slow');
+            <?php else: ?>
+            window.location = '<?php echo $this->url(array('controller' => 'index', 'action' => 'connexion')); ?>';
+            <?php endif; ?>
+        });
+        $('#shareButton').click(function(e){
+            e.preventDefault();
+            FB.ui(
+            {
+                method: 'feed',
+                name: 'DécorezRénovez',
+                link: 'http://178.32.237.186/service/detail/id/<?php echo $this->member->getId(); ?>',
+                picture: 'http://fbrell.com/f8.jpg',
+                caption: 'Fiche Artisan',
+                description: 'Mr <?php echo $this->member->getLastName(); ?>, artisan depuis <?php echo $this->service->getExperience(); ?> ans dans <?php echo $this->service->getMainJobName(); ?>'
+            },
+            function(response) {
+                if (response && response.post_id) {
+                } else {
+                }
+            });
+        });
+    });
+</script>
+<script type="text/javascript" src="<?php echo $this->baseUrl('js/report.js'); ?>"></script>

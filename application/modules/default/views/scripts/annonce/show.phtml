@@ -1,0 +1,183 @@
+<div class="pictinfo-whithouttext">
+    <img src="<?php echo $this->baseUrl('images/flecheexplication.png'); ?>" width="23" height="24" />	
+    <h1>Détail de l'annonce</h1>
+</div>
+
+<div class="box2" style="float: right;margin-right: 10px;width: 380px;">
+    <div class="title">Description et besoins du chantier: </div>
+    <div class="description"><?php echo $this->annonce->getDescription(); ?></div>
+    <div class="image">
+        <?php 
+        $pictures = $this->annonce->getPictures();
+        if($pictures != null && $pictures->count() > 0){
+            echo '<img src="'.Zend_Registry::get('assetBasePath').'annonces/'.$this->annonce->getPictures()->get(1)->getPath().'" width="300"/>';
+        } else {
+            echo '<img src="'.$this->baseUrl('images/pasdephotochantier.jpg').'" />';
+        }
+        ?>
+    </div>
+    <div class="morephoto">+ de photo</div>
+    
+    <table>
+        <tr>
+            <td class="label">Budget approximatif :</td>
+            <td style="font-weight: bold;color: #82baea"><?php echo \Default_Model_Base_Budget::getBudgetDescription($this->annonce->getBudget()); ?></td>
+        </tr>
+        <tr>
+            <td class="label">Durée approximative :</td>
+            <td style="font-weight: bold;color: #9fbf37"><?php echo \Default_Model_Base_Duration::getDurationDescription($this->annonce->getDuration()); ?></td>
+        </tr>
+        <tr>
+            <td class="label">Métier demandés :</td>
+            <td>
+                <ul>
+                <?php 
+                    foreach($this->annonce->getJobs() as $job){
+                        echo '<li>'.$job->getName().'</li>';
+                    }
+                ?>
+                </ul>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="box2" style="float: right;width: 380px;margin-right: 20px;">
+    <table>
+        <tr>
+            <td class="label">Nom :</td>
+            <td class="info"><?php echo $this->annonce->getMember()->getLastname(); ?></td>
+        </tr>
+        <tr>
+            <td class="label">Prénom :</td>
+            <td class="info"><?php echo $this->annonce->getMember()->getFirstname(); ?></td>
+        </tr>
+        <tr>
+            <td class="label">Email :</td>
+            <td class="info">
+                <?php if($this->user != null){ ?>
+                    <?php if($this->user->getRole() != 'pro' && $this->user->getFeature()->isPro()){ ?>
+                        <?php echo $this->annonce->getMember()->getEmail(); ?>
+                    <?php } else { ?>
+                        Pour les inscrits pro
+                    <?php } ?>
+                <?php } else { ?>
+                    <span>Pour les inscrits pro</span>
+                <?php } ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="label">Téléphone :</td>
+            <td class="info">
+                <?php if($this->user != null){ ?>
+                    <?php if($this->user->getRole() != 'pro' && $this->user->getFeature()->isPro()){ ?>
+                        <?php echo $this->annonce->getMember()->getPhone(); ?>
+                    <?php } else { ?>
+                        Pour les inscrits pro
+                    <?php } ?>
+                <?php } else { ?>
+                    <span>Pour les inscrits pro</span>
+                <?php } ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="label">Fax :</td>
+            <td class="info">
+                <?php if($this->user != null){ ?>
+                    <?php if($this->user->getRole() != 'pro' && $this->user->getFeature()->isPro()){ ?>
+                        <?php echo $this->annonce->getMember()->getFax(); ?>
+                    <?php } else { ?>
+                        Pour les inscrits pro
+                    <?php } ?>
+                <?php } else { ?>
+                    <span>Pour les inscrits pro</span>
+                <?php } ?>
+            </td>
+        </tr>
+                <?php if($this->user == null){ ?>
+        <tr>
+            <td colspan='2' style="text-align: right; padding-right: 50px;"><a class="button_orange" href="<?php echo $this->url(array('controller' => 'membre', 'action' => 'inscription')); ?>">s'inscrire</a></td>
+        </tr>
+                <?php } ?>
+    </table>
+</div>
+<div style="clear: right;"></div>
+
+<div class="headinfo" style="padding-left: 10px;padding-right: 10px">
+    Le site decorez-renovez.fr est un simple outils de mise en relation et ne sera en aucun cas impliqué dans
+    les litiges ou désaccords entre le professionel et son client.
+</div>
+
+<div style="margin-left: 230px;margin-top: 20px;">
+    <a class="button_orange" style="margin-right: 20px;" href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'index')); ?>">&lt; Retour à la liste</a>
+    <a class="button_orange" href="">Enregistrer la fiche</a>
+</div>
+
+<!--
+<h2>Ses offres</h2>
+<div>
+    <?php foreach($this->offers as $offre){ ?>
+        <div>
+            <div><?php echo $offre->getMember()->getLastname(); ?></div>
+            <div><?php echo $offre->getPrice(); ?></div>
+            <div><?php echo $offre->getDescription(); ?></div>
+            <div><?php echo $offre->getCreatedAt()->format('\l\e d/m/Y à H:i'); ?></div>
+            <?php if(isset($this->member) && $offre->getMember()->getId() == $this->member->getId()){ ?>
+            <a href="<?php echo $this->url(array('controller' => 'offer', 'action' => 'delete', 'id' => $offre->getId())); ?>">delete</a>
+            <?php } ?>
+        </div>
+    <?php } ?>
+</div>
+<?php if(isset($this->member) && $this->member->getFeature() != null && $this->member->getFeature()->isPro()){ ?>
+<a href="<?php echo $this->url(array('controller' => 'offer', 'action' => 'create', 'id' => $this->annonce->getId())); ?>">Envoyer un devis</a>
+<?php } ?>
+
+<div id="shareButton">Share</div>
+
+-->
+
+
+<script>
+    $(document).ready(function(){
+//        $(".fancybox")
+//        .attr('rel', 'pictures')
+//        .fancybox({
+//            openEffect	: 'none',
+//            closeEffect	: 'none',
+//            cyclic: true,
+//            prevEffect : 'none',
+//            nextEffect : 'none',
+//            arrows : true,
+//        });
+        $('.morephoto').click(function(){
+            $.fancybox.open([
+                <?php
+                foreach($pictures as $picture){
+                    echo "{ href: '".$this->baseUrl('annonces/'.$picture->getPath())."' },";
+                }
+                ?>
+            ], {
+                padding : 0
+            });
+        });
+        $('#shareButton').click(function(e){
+            e.preventDefault();
+            FB.ui(
+            {
+                method: 'feed',
+                name: 'DécorezRénovez',
+                link: '<?php echo Zend_Registry::get('host').Zend_Registry::get('assetBasePath'); ?>annonce/show/id/<?php echo $this->annonce->getId(); ?>',
+                picture: 'http://fbrell.com/f8.jpg',
+                caption: 'Annonce',
+                description: 'Mr <?php echo addslashes($this->annonce->getMember()->getLastName()); ?> cherche un profesionnel (<?php echo addslashes($this->annonce->getDescription()); ?>)'
+            },
+            function(response) {
+                if (response && response.post_id) {
+                } else {
+                }
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript" src="<?php echo $this->baseUrl('js/jquery.fancybox.pack.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl('js/jquery.fancybox-buttons.js'); ?>"></script>

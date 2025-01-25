@@ -1,0 +1,31 @@
+<?php $this->headScript()->appendFile($this->baseUrl('js/admin/commentValidation.js'), 'text/javascript'); ?>
+<?php
+if (is_array($this->formMessages) && !empty($this->formMessages))
+{
+    echo $this->partial('_partials/messenger.phtml', array('data' => $this->formMessages));
+}
+?>
+<div>
+    <a href="/admin/commentaire/index/type/<?php echo My_Controller_Action::COMMENT_STATUS_NEW; ?>">
+        Nouveau
+    </a> | 
+    <a href="/admin/commentaire/index/type/<?php echo My_Controller_Action::COMMENT_STATUS_ACTIVE; ?>">
+        Activé
+    </a> | 
+    <a href="/admin/commentaire/index/type/<?php echo My_Controller_Action::COMMENT_STATUS_MODERATED; ?>">
+        Modéré
+    </a> | 
+    <a href="/admin/commentaire/index/type/<?php echo My_Controller_Action::COMMENT_STATUS_DELETED; ?>">
+        Supprimé
+    </a>  
+</div>
+
+<?php if (isset($this->comments) && count($this->comments) > 0): ?>
+    <?php foreach ($this->comments as $comment): ?>
+        <?php echo $this->partial('_partials/comment.phtml', array('comment' => $comment)); ?>
+    <?php endforeach; ?>
+
+    <?php echo $this->paginationControl($this->comments, 'Elastic', '_partials/pagination.phtml'); ?>
+<?php else: ?>
+    Aucun commentaires trouvé.
+<?php endif; ?>

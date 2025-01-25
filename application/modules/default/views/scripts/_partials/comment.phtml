@@ -1,0 +1,8 @@
+    <?php
+
+    echo $this->partial('_partials/comment_description.phtml', array(
+        'comment' => $this->comment,
+        'isDetail' => isset($this->isDetail) ? $this->isDetail : true,
+        'isOwner' => isset($this->isOwner) ? $this->isOwner : false)
+    );
+    ?>

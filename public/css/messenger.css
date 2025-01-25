@@ -1,0 +1,32 @@
+div.messenger {
+	margin: 5px 0;
+}
+
+div.messenger ul {
+    list-style-position: inside;
+}
+
+div.messenger li {
+	padding: 5px 0 0 30px;
+}
+
+div.messenger li.message_ok {
+	background-color: DarkSeaGreen;
+	border: 1px solid green;
+	color: white;
+	padding-bottom: 5px;
+}
+
+div.messenger li.message_error {
+	background-color: lightCoral;
+	border: 1px solid red;
+	color: white;
+	padding-bottom: 5px;
+}
+
+div.messenger li.message_info {
+	background-color: RoyalBlue;
+	border: 1px solid blue;
+	color: white;
+	padding-bottom: 5px;
+}

@@ -1,0 +1,32 @@
+<h1>Cr&eacute;er une nouvelle annonce</h1>
+
+<?php
+if (is_array($this->formMessages) && !empty($this->formMessages))
+{
+    echo $this->partial('_partials/messenger.phtml', array('data' => $this->formMessages));
+}
+?>
+<div class="box inner">
+    <form id="creationAnnonce" enctype="multipart/form-data" action="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'creation')); ?>" method="post">
+    <?php if ($this->max_announcement): ?>
+        Vous avez atteint le maximum d'annonces possible (<?php echo My_Controller_Action::MAX_ANNOUNCEMENT_PER_MEMBER; ?> max.). 
+        Pour pouvoir créer une autre annonce, vous devez supprimer une annonce ou attendre sa fin de validité (30 jours).
+    <?php else: ?>
+        <?php echo $this->form->description; ?>
+
+        <?php echo $this->form->department; ?>
+        <?php echo $this->form->budget; ?>
+        <?php echo $this->form->duration; ?>
+
+        <div id="creation-annonce-jobs">
+            <?php echo $this->form->jobs; ?>
+        </div>
+
+        <?php echo $this->form->avatar1; ?>
+        <?php echo $this->form->avatar2; ?>
+        <?php echo $this->form->avatar3; ?>
+        <?php echo $this->form->avatar4; ?>
+        <input type="submit" value="Créer"/>
+    <?php endif; ?>
+    </form>
+</div>

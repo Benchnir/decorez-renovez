@@ -1,0 +1,82 @@
+<div class="headinfo">
+    Déposer votre annonce sur decorez-renovez.fr  est GRATUIT et très simple. 
+    Votre annonce sera validé par notre équipe éditorial avant d'être mis en ligne.
+    <a href="">Voir les règles de diffusion</a>.
+</div>
+
+<div class="pictinfo" style="margin-bottom: 20px;">
+    <img src="<?php echo $this->baseUrl('images/flecheexplication.png'); ?>" width="23" height="24" />
+    <h1>Déposez votre projet pour que des professionnels vous proposent des devis</h1>
+    <div class="text">ces information sont à titre indicatif les professionnels vous orienterons ensuite pour préciser vos besoins et le cout de votre projet</div>
+</div>
+
+<form method="POST">
+    <div class="box" style="width: 390px;float: right">
+        <?php echo $this->form->description; ?>
+        <table>
+            <tr>
+                <td class="label"><?php echo $this->form->department->renderLabel(); ?></td>
+                <td><?php echo $this->form->department->renderViewHelper(); ?></td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo $this->form->budget->renderLabel(); ?></td>
+                <td><?php echo $this->form->budget->renderViewHelper(); ?></td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo $this->form->duration->renderLabel(); ?></td>
+                <td><?php echo $this->form->duration->renderViewHelper(); ?></td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo $this->form->jobs->renderLabel(); ?></td>
+                <td><div id="creation-annonce-jobs"><?php echo $this->form->jobs->renderViewHelper(); ?></div></td>
+            </tr>
+        </table>
+    </div>
+    <div class="box" style="width: 400px;float: right;margin-right: 10px;">
+        <table>
+            <tr>
+                <td class="label"><?php echo $this->form->lastname->renderLabel(); ?></td>
+                <td><?php echo $this->form->lastname->renderViewHelper(); ?></td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo $this->form->firstname->renderLabel(); ?></td>
+                <td><?php echo $this->form->firstname->renderViewHelper(); ?></td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo $this->form->email->renderLabel(); ?></td>
+                <td><?php echo $this->form->email->renderViewHelper(); ?></td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo $this->form->phone->renderLabel(); ?></td>
+                <td><?php echo $this->form->phone->renderViewHelper(); ?></td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo $this->form->password->renderLabel(); ?></td>
+                <td><?php echo $this->form->password->renderViewHelper(); ?></td>
+            </tr>
+            <tr>
+                <td class="label"><?php echo $this->form->password2->renderLabel(); ?></td>
+                <td><?php echo $this->form->password2->renderViewHelper(); ?></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;"><?php echo $this->form->captcha; ?></td>
+            </tr>
+        </table>
+    </div>
+    
+    <div style="clear: right"></div>
+    
+    <div class="headinfo" style="margin-top: 20px;padding-left: 10px;padding-right: 10px">
+        Le site decorez-renovez.fr est un simple outils de mise en relation et 
+        ne sera en aucun cas implqué dans les litiges ou désaccords entre le
+        professionnel et sont client.
+    </div>
+    
+    <div class="headinfo" style="padding-left: 10px;padding-right: 10px">
+        En validant la diffusion de mon annonce, j'accepte les Règles de diffusion
+        et d'utilisation du site decorez-renovez.fr et j'autorise decorez-renovez.fr 
+        à diffuser mon annonce.
+    </div>
+    
+    <div style="text-align: center"><input type="submit" value="Valider mon annonce"/></div>
+</form>

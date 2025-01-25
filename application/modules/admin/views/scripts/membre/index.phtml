@@ -1,0 +1,16 @@
+<?php
+if (is_array($this->formMessages) && !empty($this->formMessages)) {
+    echo $this->partial('_partials/messenger.phtml', array('data' => $this->formMessages));
+}
+?>
+<div class="box inner">
+    <?php echo $this->form; ?>
+</div>
+
+<?php if (isset($this->members) && count($this->members) > 0): ?>
+    <?php foreach ($this->members as $member): ?>
+        <?php echo $this->partial('_partials/member.phtml', array('member' => $member)); ?>
+    <?php endforeach; ?>
+
+    <?php echo $this->paginationControl($this->members, 'Elastic', '_partials/pagination.phtml'); ?>
+<?php endif; ?>

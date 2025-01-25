@@ -1,0 +1,7 @@
+<h2>Creation de votre offre</h2>
+<form method="POST" action="<?php echo $this->url(array('controller' => 'offer', 'action' => 'create', 'id' => $this->annonce->getId())); ?>">
+    <input type="hidden" name="id" value="<?php echo $this->annonce->getId(); ?>"
+    <?php echo $this->addOfferForm->getElement('price'); ?>
+    <?php echo $this->addOfferForm->getElement('description'); ?>
+    <?php echo $this->addOfferForm->getElement('submit'); ?>
+</form>

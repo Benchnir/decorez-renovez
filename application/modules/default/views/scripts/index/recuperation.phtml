@@ -1,0 +1,14 @@
+<div class="pictinfo-whithouttext">
+    <img src="<?php echo $this->baseUrl('images/flecheexplication.png'); ?>" width="23" height="24" />	
+    <h1>Récupérer mon mot de passe</h1>
+</div>
+
+<?php
+if (is_array($this->formMessages) && !empty($this->formMessages))
+{
+    echo $this->partial('_partials/messenger.phtml', array('data' => $this->formMessages));
+}
+?>
+<div class="box" style="margin-top: 10px;">
+    <?php echo $this->form; ?>
+</div>

@@ -1,0 +1,199 @@
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Decorez-Renovez.fr l'outil indispensable pour vos travaux</title>
+        <link rel="shortcut icon" href="images/favicon.ico" type="/images/favicon">
+        <?php echo $this->headTitle() ?>
+        <?php echo $this->headLink() ?>
+        <?php echo $this->headStyle() ?>
+        <?php echo $this->headScript() ?>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript" src="<?php echo $this->baseUrl('js/jquery-ui.js'); ?>"></script>
+    </head>
+    <body>
+        <div id="wrap">
+            <div id="sidebar">
+                <img id="logo" src="<?php echo $this->baseUrl('images/logo.png'); ?>" width="136" height="45" alt="decorez renovez" />
+                
+                <div class="pub1">
+                    <div>publicité <img src="<?php echo $this->baseUrl('images/carre.gif'); ?>" width="6" height="7" style="margin-left:5px;" alt="publicité travaux" />
+                    </div>
+                    <?php echo $this->partial('_partials/pubs/120x600_1.phtml'); ?>
+                </div>
+                
+                <div class="logo">
+                    <img src="<?php echo $this->baseUrl('images/pub_travaux.jpg'); ?>"  alt="Gros Travaux" />
+                </div>
+                
+                <img id="side-round-topleft" src="<?php echo $this->baseUrl('images/rond1.gif'); ?>" />
+                <img id="side-round-topright" src="<?php echo $this->baseUrl('images/rond1.gif'); ?>" />
+                <img id="side-round-botleft" src="<?php echo $this->baseUrl('images/rond1.gif'); ?>" />
+                <img id="side-round-botright" src="<?php echo $this->baseUrl('images/rond1.gif'); ?>" />
+            </div>
+
+            <div id="container">
+                <div id="nav">
+                    <ul>
+                        <li>
+                            <a class="rightseparator" href="<?php echo $this->url(array('controller' => 'index', 'action' => 'index')); ?>">Accueil</a>
+                        </li>
+                        <?php if ($this->user == null): ?>
+                            <li>
+                                <a class="rightseparator" href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'index')); ?>">Annonces Chantiers</a>
+                            </li>
+                            <li>
+                                <a class="rightseparator" href="<?php echo $this->url(array('controller' => 'service', 'action' => 'index')); ?>">Trouver un pro</a>
+                            </li>
+                            <li>
+                                <div style="background: #E1E1E1; padding: 5px;position: relative;top: -5px;">
+                                    <fb:login-button autologoutlink="true" perms="email"></fb:login-button>
+
+                                    <a style="background: #4476bb;padding: 4px 10px;color: white;font-size: 12px;position: relative;top: -4px;" href="<?php echo $this->url(array('controller' => 'index', 'action' => 'connexion')); ?>">Se Connecter</a>
+                                </div>
+                            </li>
+                        <?php else: ?>
+                            <?php if ($this->user->getRole() == 'admin'): ?>
+                                <li>
+                                    <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'membre', 'action' => 'index')); ?>">Administration</a>
+                                </li>
+                            <?php elseif ($this->user->getRole() == 'pro'): ?>
+                                <li>
+                                    <a class="rightseparator" href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'index')); ?>">Annonces</a>
+                                </li>
+                                <li>
+                                    <a class="rightseparator" href="<?php echo $this->url(array('controller' => 'membre', 'action' => 'index')); ?>">Espace Pro</a>
+                                </li>
+                            <?php else: ?>
+                                <li>
+                                    <a class="rightseparator" href="<?php echo $this->url(array('controller' => 'service', 'action' => 'index')); ?>">Meilleurs Services</a>
+                                </li>
+                                <li>
+                                    <a class="rightseparator" href="<?php echo $this->url(array('controller' => 'membre', 'action' => 'index')); ?>">Espace Client</a>
+                                </li>
+                            <?php endif; ?>
+                        
+                            <?php if($this->user->getFacebookId() != null): ?>
+                                <li>
+                                    <fb:login-button autologoutlink="true" perms="email"></fb:login-button>
+                                </li>
+                            <?php else: ?>
+                                <li>
+                                    <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'deconnexion')); ?>">Se D&eacute;connecter</a>
+                                </li>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+
+                <div id="content-short">
+                    <?php echo $this->layout()->content ?>
+                </div>
+
+            </div>
+
+            <div class="clear"></div>
+
+            <div id="footer">
+                <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'infos-legales')); ?>">Infos légales l</a>
+                <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'a-propos')); ?>">Qui sommes nous l</a> 
+                <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'contact')); ?>">Contact l</a>
+                <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'publicite')); ?>">Publicité l</a>
+                <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'cgv')); ?>">CGV l</a>
+                <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'regles-de-diffusion')); ?>">Règles de Diffusion l</a>
+                <a href="/article?page=5">Ajouter à mes favoris l</a>
+                <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'partenaire')); ?>">Partenaires</a>
+            </div>
+
+            <div class="clear"></div>
+        </div>
+        
+        <div id="fb-root"></div>
+        <script>
+            $(document).ready(function(){
+                // Additional JS functions here
+                window.fbAsyncInit = function() {
+                    FB.init({
+                        appId      : '316673455129025', // App ID
+                        channelUrl : '//www.decorez-renovez.fr/channel.html', // Channel File
+                        status     : true, // check login status
+                        cookie     : true, // enable cookies to allow the server to access the session
+                        xfbml      : true  // parse XFBML
+                    });
+
+                    // Additional init code here
+
+                    /* All the events registered */
+                    FB.Event.subscribe('auth.login', function(response) {
+                        var firstname = "";
+                        var lastname = "";
+                       // do something with response
+                        FB.api('/me', function(response) {
+                            if(response.name){
+                                firstname = response.name.split(" ")[0];
+                                lastname = response.name.split(" ")[1];
+                            }
+                            console.log(response.id);
+                            $.ajax({
+                                type: "POST",
+                                url: "<?php echo $this->url(array('controller' => 'auth', 'action' => 'facebooklogin')); ?>",
+                                context: document.body,
+                                data: {
+                                    fbid: response.id,
+                                    fname: firstname,
+                                    lname: lastname,
+                                    email: response.email
+                                }
+                            }).done(function() {
+                                document.location.href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'index')); ?>"
+                            });
+                        });
+                    });
+                    FB.Event.subscribe('auth.logout', function(response) {
+                        // do something with response
+                        $.ajax({
+                            type: "POST",
+                            url: "<?php echo $this->url(array('controller' => 'auth', 'action' => 'facebooklogout')); ?>"
+                        }).done(function() {
+                            document.location.href="<?php echo $this->url(array('controller' => 'index', 'action' => 'connexion')); ?>"
+                        });
+                    });
+
+                    <?php if($this->user == null){ ?>
+                    FB.getLoginStatus(function(response) {
+                        if (response.status === 'connected') {
+                            var uid = response.authResponse.userID;
+                            var accessToken = response.authResponse.accessToken;
+                            $.ajax({
+                                type: "POST",
+                                url: "<?php echo $this->url(array('controller' => 'auth', 'action' => 'facebooklogin')); ?>",
+                                context: document.body,
+                                data: {
+                                    fbid: response.authResponse.userID,
+                                    email: response.email
+                                }
+                            }).done(function() {
+                                document.location.href="<?php echo $this->url(array('controller' => 'annonce', 'action' => 'index')); ?>"
+                            });
+                        } else if (response.status === 'not_authorized') {
+                            // the user is logged in to Facebook, 
+                            // but has not authenticated your app
+                        } else {
+                            // the user isn't logged in to Facebook.
+                        }
+                    });
+                    <?php } ?>
+                };
+
+                // Load the SDK Asynchronously
+                (function(d){
+                    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+                    if (d.getElementById(id)) {return;}
+                    js = d.createElement('script'); js.id = id; js.async = true;
+                    js.src = "//connect.facebook.net/en_US/all.js";
+                    ref.parentNode.insertBefore(js, ref);
+                }(document));
+            });
+        </script>
+    </body>
+</html>
